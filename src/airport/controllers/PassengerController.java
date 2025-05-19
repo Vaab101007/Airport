@@ -4,11 +4,12 @@
  */
 package airport.controllers;
 
-import airport.models.Passenger;
+import airport.controllers.utils.Response;
+import airport.models.persons.Passenger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import airport.models.storage.PassengerStorage;
-import airport.controllers.Status;
+import airport.controllers.utils.Status;
 
 /**
  *

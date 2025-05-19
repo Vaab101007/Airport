@@ -2,9 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package airport.models;
+package airport.models.flights;
 
-import airport.models.Passenger;
+import airport.models.Location;
+import airport.models.Plane;
+import airport.models.Prototype;
+import airport.models.persons.Passenger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -36,7 +39,7 @@ public class Flight implements Prototype<Flight> {
         this.hoursDurationArrival = hoursDurationArrival;
         this.minutesDurationArrival = minutesDurationArrival;
 
-        this.plane.addFlight(this);
+    
     }
 
     public Flight(String id, Plane plane, Location departureLocation, Location scaleLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival, int hoursDurationScale, int minutesDurationScale) {
