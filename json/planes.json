@@ -1,0 +1,86 @@
+[
+    {
+        "id": "AB12345",
+        "brand": "Boeing",
+        "model": "737 MAX",
+        "maxCapacity": 210,
+        "airline": "American Airlines"
+    },
+    {
+        "id": "CD67890",
+        "brand": "Airbus",
+        "model": "A320neo",
+        "maxCapacity": 194,
+        "airline": "Delta Airlines"
+    },
+    {
+        "id": "EF11223",
+        "brand": "Boeing",
+        "model": "787 Dreamliner",
+        "maxCapacity": 296,
+        "airline": "United Airlines"
+    },
+    {
+        "id": "GH44556",
+        "brand": "Embraer",
+        "model": "E195-E2",
+        "maxCapacity": 146,
+        "airline": "Azul Linhas Aéreas"
+    },
+    {
+        "id": "IJ77889",
+        "brand": "Airbus",
+        "model": "A350-900",
+        "maxCapacity": 325,
+        "airline": "Lufthansa"
+    },
+    {
+        "id": "KL33445",
+        "brand": "Bombardier",
+        "model": "CRJ900",
+        "maxCapacity": 90,
+        "airline": "Air Canada"
+    },
+    {
+        "id": "MN55667",
+        "brand": "Boeing",
+        "model": "777-300ER",
+        "maxCapacity": 396,
+        "airline": "Emirates"
+    },
+    {
+        "id": "OP88990",
+        "brand": "Airbus",
+        "model": "A330-300",
+        "maxCapacity": 277,
+        "airline": "Qatar Airways"
+    },
+    {
+        "id": "QR66778",
+        "brand": "Mitsubishi",
+        "model": "SpaceJet M90",
+        "maxCapacity": 88,
+        "airline": "All Nippon Airways"
+    },
+    {
+        "id": "ST99001",
+        "brand": "Tupolev",
+        "model": "Tu-204",
+        "maxCapacity": 210,
+        "airline": "Rossiya Airlines"
+    },
+    {
+        "id": "UV22334",
+        "brand": "Sukhoi",
+        "model": "Superjet 100",
+        "maxCapacity": 108,
+        "airline": "Aeroflot"
+    },
+    {
+        "id": "WX55678",
+        "brand": "Comac",
+        "model": "C919",
+        "maxCapacity": 168,
+        "airline": "China Eastern Airlines"
+    }
+]

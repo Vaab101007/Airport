@@ -1,0 +1,98 @@
+[
+    {
+        "airportId": "JFK",
+        "airportName": "John F. Kennedy International Airport",
+        "airportCity": "New York",
+        "airportCountry": "USA",
+        "airportLatitude": 40.6413,
+        "airportLongitude": -73.7781
+    },
+    {
+        "airportId": "LHR",
+        "airportName": "Heathrow Airport",
+        "airportCity": "London",
+        "airportCountry": "United Kingdom",
+        "airportLatitude": 51.4700,
+        "airportLongitude": -0.4543
+    },
+    {
+        "airportId": "CDG",
+        "airportName": "Charles de Gaulle Airport",
+        "airportCity": "Paris",
+        "airportCountry": "France",
+        "airportLatitude": 49.0097,
+        "airportLongitude": 2.5479
+    },
+    {
+        "airportId": "GRU",
+        "airportName": "Sao Paulo/Guarulhos International Airport",
+        "airportCity": "Sao Paulo",
+        "airportCountry": "Brazil",
+        "airportLatitude": -23.4356,
+        "airportLongitude": -46.4731
+    },
+    {
+        "airportId": "HND",
+        "airportName": "Tokyo Haneda Airport",
+        "airportCity": "Tokyo",
+        "airportCountry": "Japan",
+        "airportLatitude": 35.5494,
+        "airportLongitude": 139.7798
+    },
+    {
+        "airportId": "DXB",
+        "airportName": "Dubai International Airport",
+        "airportCity": "Dubai",
+        "airportCountry": "United Arab Emirates",
+        "airportLatitude": 25.2532,
+        "airportLongitude": 55.3657
+    },
+    {
+        "airportId": "SYD",
+        "airportName": "Sydney Kingsford Smith Airport",
+        "airportCity": "Sydney",
+        "airportCountry": "Australia",
+        "airportLatitude": -33.9399,
+        "airportLongitude": 151.1753
+    },
+    {
+        "airportId": "PEK",
+        "airportName": "Beijing Capital International Airport",
+        "airportCity": "Beijing",
+        "airportCountry": "China",
+        "airportLatitude": 40.0801,
+        "airportLongitude": 116.5846
+    },
+    {
+        "airportId": "FRA",
+        "airportName": "Frankfurt Airport",
+        "airportCity": "Frankfurt",
+        "airportCountry": "Germany",
+        "airportLatitude": 50.0379,
+        "airportLongitude": 8.5622
+    },
+    {
+        "airportId": "MEX",
+        "airportName": "Mexico City International Airport",
+        "airportCity": "Mexico City",
+        "airportCountry": "Mexico",
+        "airportLatitude": 19.4361,
+        "airportLongitude": -99.0719
+    },
+    {
+        "airportId": "CMN",
+        "airportName": "Mohammed V International Airport",
+        "airportCity": "Casablanca",
+        "airportCountry": "Morocco",
+        "airportLatitude": 33.3675,
+        "airportLongitude": -7.5898
+    },
+    {
+        "airportId": "DUB",
+        "airportName": "Dublin Airport",
+        "airportCity": "Dublin",
+        "airportCountry": "Ireland",
+        "airportLatitude": 53.4213,
+        "airportLongitude": -6.2701
+    }
+]
