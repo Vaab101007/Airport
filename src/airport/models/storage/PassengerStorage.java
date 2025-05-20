@@ -4,7 +4,7 @@
  */
 package airport.models.storage;
 
-import airport.models.persons.Passenger;
+import airport.models.Passenger;
 import java.util.ArrayList;
 /**
  *

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package airport.models.persons;
+package airport.models;
 
 import airport.models.flights.Flight;
 import airport.models.Prototype;
@@ -94,23 +94,8 @@ public class Passenger implements Prototype<Passenger>  {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-    
-    public String getFullname() {
-        return firstname + " " + lastname;
-    }
-    
-    public String generateFullPhone() {
-        return "+" + countryPhoneCode + " " + phone;
-    }
-    
-    public int calculateAge() {
-        return Period.between(birthDate, LocalDate.now()).getYears();
-    }
-    
-    public int getNumFlights() {
-        return flights.size();
-    }
+    }    
+
     
     // NUEVO!!!
     @Override

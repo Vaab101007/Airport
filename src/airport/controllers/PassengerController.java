@@ -5,7 +5,7 @@
 package airport.controllers;
 
 import airport.controllers.utils.Response;
-import airport.models.persons.Passenger;
+import airport.models.Passenger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import airport.models.storage.PassengerStorage;
