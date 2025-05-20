@@ -7,6 +7,7 @@ package airport.models;
 /**
  *
  * @author vangu
+ * @param <T>
  */
 public interface Prototype<T> {
     T clone();

@@ -12,13 +12,13 @@ import java.util.ArrayList;
  * @author edangulo
  */
 public class Plane implements Prototype<Plane> {
-    
+
     private final String id;
     private String brand;
     private String model;
-    private final int maxCapacity;
+    private int maxCapacity;
     private String airline;
-    private ArrayList<Flight> flights;
+    private final ArrayList<Flight> flights;
 
     public Plane(String id, String brand, String model, int maxCapacity, String airline) {
         this.id = id;
@@ -29,44 +29,46 @@ public class Plane implements Prototype<Plane> {
         this.flights = new ArrayList<>();
     }
 
-    public void addFlight(Flight flight) {
-        this.flights.add(flight);
+    public String getId() { 
+        return id; 
     }
     
-    public String getId() {
-        return id;
+    public String getBrand() { 
+        return brand; 
     }
-
-    public String getBrand() {
-        return brand;
+    
+    public String getModel() { 
+        return model; 
     }
-
-    public String getModel() {
-        return model;
+    
+    public int getMaxCapacity() { 
+        return maxCapacity; 
     }
-
-    public int getMaxCapacity() {
-        return maxCapacity;
-    }
-
+    
     public String getAirline() {
-        return airline;
+        return airline; 
+    }
+    
+    public ArrayList<Flight> getFlights() { 
+        return flights; 
     }
 
-    public ArrayList<Flight> getFlights() {
-        return flights;
-    }
     
-    public int getNumFlights() {
-        return flights.size();
+    public void setBrand(String brand) { 
+        this.brand = brand;
     }
-    
+    public void setModel(String model) { 
+        this.model = model; 
+    }
+    public void setAirline(String airline) { 
+        this.airline = airline; 
+    }
+
+    // clone (Prototype)
     @Override
     public Plane clone() {
         Plane copy = new Plane(id, brand, model, maxCapacity, airline);
         copy.getFlights().addAll(flights); // copia superficial
         return copy;
     }
-
-    
 }

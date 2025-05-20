@@ -4,6 +4,8 @@
  */
 package airport.models.utils;
 
+import airport.models.persons.Passenger;
+
 /**
  *
  * @author vangu
