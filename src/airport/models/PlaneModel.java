@@ -52,7 +52,6 @@ public class PlaneModel implements Prototype<PlaneModel> {
     public ArrayList<Flight> getFlights() { 
         return flights; 
     }
-
     
     public void setBrand(String brand) { 
         this.brand = brand;

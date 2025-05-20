@@ -18,7 +18,25 @@ import java.util.Comparator;
  */
 public class PassengerController {
 
- private final PassengerStorage storage = PassengerStorage.getInstance();
+    public static Response createPassenger(String id2, String firstname, String lastname, String year2, String month2, String date2, String countryPhoneCode, String phone2, String country2){
+        
+        long id = Long.parseLong(id2);
+        int year = Integer.parseInt(year2);
+        int month = Integer.parseInt(month2);
+        int date = Integer.parseInt(date2);
+        LocalDate birthDate = LocalDate.of(year,month,date);
+        int phoneCode = Integer.parseInt(countryPhoneCode);
+        long phone = Long.parseLong(phone2);
+        
+        PassengerModel p = new PassengerModel(id,firstname,lastname,birthDate,phoneCode,phone,country2);
+ 
+        Response<PassengerModel> validation = validatePassenger(p, false);
+
+        if (validation != null) return validation;
+            storage.addItem(p);
+        return new Response<>(Status.CREATED, "Pasajero registrado con éxito", p.clone());
+    }
+    private final PassengerStorage storage = PassengerStorage.getInstance();
  
     //REGISTRAR PASSENGER
     public Response<PassengerModel> registerPassenger(PassengerModel p) { 
@@ -92,5 +110,5 @@ public class PassengerController {
         
         return null;
     }
-    
 }
+

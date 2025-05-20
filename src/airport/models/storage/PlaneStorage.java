@@ -6,7 +6,6 @@ package airport.models.storage;
 
 
 import airport.models.PlaneModel;
-import airport.models.persons.PassengerModel;
 import java.util.ArrayList;
 
 /**

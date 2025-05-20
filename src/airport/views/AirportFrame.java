@@ -5,6 +5,7 @@
 package airport.views;
 
 import airport.controllers.PassengerController;
+import airport.controllers.utils.Response;
 import airport.models.Location;
 import airport.models.PlaneModel;
 import airport.models.flights.Flight;
@@ -1535,32 +1536,33 @@ public class AirportFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        long id = Long.parseLong(jTextField20.getText());
+        // TODO add your handling code here: //CAMBIAR NOMBREEE
+        String id = jTextField20.getText();
         String firstname = jTextField22.getText();
         String lastname = jTextField23.getText();
-        int year = Integer.parseInt(jTextField24.getText());
-        int month = Integer.parseInt(MONTH.getItemAt(MONTH5.getSelectedIndex()));
-        int day = Integer.parseInt(DAY.getItemAt(DAY5.getSelectedIndex()));
-        int phoneCode = Integer.parseInt(jTextField26.getText());
-        long phone = Long.parseLong(jTextField25.getText());
+        String year = jTextField24.getText();
+        String month = MONTH.getItemAt(MONTH5.getSelectedIndex());
+        String day = DAY.getItemAt(DAY5.getSelectedIndex());
+        String phoneCode = jTextField26.getText();
+        String phone = jTextField25.getText();
         String country = jTextField27.getText();
 
-        LocalDate birthDate = LocalDate.of(year, month, day);
+        String birthDate = year+month+day;
+        
 
-        PassengerModel passenger = null;
-        for (PassengerModel p : this.passengers) {
-            if (p.getId() == id) {
-                passenger = p;
-            }
-        }
+        Response response =PassengerController.createPassenger(id, firstname, lastname, birthDate, phoneCode, phone, country);
+//        for (PassengerModel p : this.passengers) {
+//            if (id == p.getId()) {
+//                PassengerModel = p;
+//            }
+//        }
 
-        passenger.setFirstname(firstname);
-        passenger.setLastname(lastname);
-        passenger.setBirthDate(birthDate);
-        passenger.setCountryPhoneCode(phoneCode);
-        passenger.setPhone(phone);
-        passenger.setCountry(country);
+//        passenger.setFirstname(firstname);
+//        passenger.setLastname(lastname);
+//        passenger.setBirthDate(birthDate);
+//        passenger.setCountryPhoneCode(phoneCode);
+//        passenger.setPhone(phone);
+//        passenger.setCountry(country);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
