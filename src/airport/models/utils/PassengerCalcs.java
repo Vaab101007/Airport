@@ -4,7 +4,7 @@
  */
 package airport.models.utils;
 
-import airport.models.persons.Passenger;
+import airport.models.persons.PassengerModel;
 import java.time.LocalDate;
 import java.time.Period;
 /**
@@ -12,12 +12,12 @@ import java.time.Period;
  * @author vangu
  */
 public class PassengerCalcs {
-     public static int calculateAge(Passenger p) {
+     public static int calculateAge(PassengerModel p) {
         if (p.getBirthDate() == null) return 0;
         return Period.between(p.getBirthDate(), LocalDate.now()).getYears();
     }
 
-    public static int getNumFlights(Passenger p) {
+    public static int getNumFlights(PassengerModel p) {
         return p.getFlights().size();
     }
 }

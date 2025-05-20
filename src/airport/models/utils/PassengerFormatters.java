@@ -4,18 +4,18 @@
  */
 package airport.models.utils;
 
-import airport.models.persons.Passenger;
+import airport.models.persons.PassengerModel;
 
 /**
  *
  * @author vangu
  */
 public class PassengerFormatters {
-        public static String getFullname(Passenger p) {
+        public static String getFullname(PassengerModel p) {
         return p.getFirstname() + " " + p.getLastname();
     }
 
-    public static String generateFullPhone(Passenger p) {
+    public static String generateFullPhone(PassengerModel p) {
         return "+" + p.getCountryPhoneCode() + " " + p.getPhone();
     }
 }

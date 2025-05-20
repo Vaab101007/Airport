@@ -5,7 +5,8 @@
 package airport.models.storage;
 
 
-import airport.models.Plane;
+import airport.models.PlaneModel;
+import airport.models.persons.PassengerModel;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  */
 public class PlaneStorage extends Storage{
     private static PlaneStorage instance;
-    private ArrayList<Plane> planes;
+    private ArrayList<PlaneModel> planes;
 
     private PlaneStorage() {
         this.planes = new ArrayList<>();
@@ -29,17 +30,22 @@ public class PlaneStorage extends Storage{
 
     @Override
     public void addItem(Object object) {
-        Plane p = (Plane) object;
+        PlaneModel p = (PlaneModel) object;
         if (!planes.contains(p)) {
             planes.add(p);
         }
     }
 
-    public ArrayList<Plane> getPlanes() {
+    public ArrayList<PlaneModel> getPlanes() {
         return planes;
     }
 
     public boolean existsById(String id) {
         return planes.stream().anyMatch(p -> p.getId().equalsIgnoreCase(id));
     }
+    
+
+
+
+
 }

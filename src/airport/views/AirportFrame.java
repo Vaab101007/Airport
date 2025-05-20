@@ -6,9 +6,9 @@ package airport.views;
 
 import airport.controllers.PassengerController;
 import airport.models.Location;
-import airport.models.Plane;
+import airport.models.PlaneModel;
 import airport.models.flights.Flight;
-import airport.models.persons.Passenger;
+import airport.models.persons.PassengerModel;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Color;
 import java.time.LocalDate;
@@ -29,8 +29,8 @@ public class AirportFrame extends javax.swing.JFrame {
      * Creates new form AirportFrame
      */
     private int x, y;
-    private ArrayList<Passenger> passengers;
-    private ArrayList<Plane> planes;
+    private ArrayList<PassengerModel> passengers;
+    private ArrayList<PlaneModel> planes;
     private ArrayList<Location> locations;
     private ArrayList<Flight> flights;
 
@@ -1451,7 +1451,7 @@ public class AirportFrame extends javax.swing.JFrame {
 
         LocalDate birthDate = LocalDate.of(year, month, day);
 
-        this.passengers.add(new Passenger(id, firstname, lastname, birthDate, phoneCode, phone, country));
+        this.passengers.add(new PassengerModel(id, firstname, lastname, birthDate, phoneCode, phone, country));
         this.userSelect.addItem("" + id);
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -1463,7 +1463,7 @@ public class AirportFrame extends javax.swing.JFrame {
         int maxCapacity = Integer.parseInt(jTextField11.getText());
         String airline = jTextField12.getText();
 
-        this.planes.add(new Plane(id, brand, model, maxCapacity, airline));
+        this.planes.add(new PlaneModel(id, brand, model, maxCapacity, airline));
 
         this.jComboBox1.addItem(id);
     }//GEN-LAST:event_jButton9ActionPerformed
@@ -1503,8 +1503,8 @@ public class AirportFrame extends javax.swing.JFrame {
 
         LocalDateTime departureDate = LocalDateTime.of(year, month, day, hour, minutes);
 
-        Plane plane = null;
-        for (Plane p : this.planes) {
+        PlaneModel plane = null;
+        for (PlaneModel p : this.planes) {
             if (planeId.equals(p.getId())) {
                 plane = p;
             }
@@ -1548,8 +1548,8 @@ public class AirportFrame extends javax.swing.JFrame {
 
         LocalDate birthDate = LocalDate.of(year, month, day);
 
-        Passenger passenger = null;
-        for (Passenger p : this.passengers) {
+        PassengerModel passenger = null;
+        for (PassengerModel p : this.passengers) {
             if (p.getId() == id) {
                 passenger = p;
             }
@@ -1568,10 +1568,10 @@ public class AirportFrame extends javax.swing.JFrame {
         long passengerId = Long.parseLong(jTextField28.getText());
         String flightId = jComboBox5.getItemAt(jComboBox5.getSelectedIndex());
 
-        Passenger passenger = null;
+        PassengerModel passenger = null;
         Flight flight = null;
 
-        for (Passenger p : this.passengers) {
+        for (PassengerModel p : this.passengers) {
             if (p.getId() == passengerId) {
                 passenger = p;
             }
@@ -1607,8 +1607,8 @@ public class AirportFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         long passengerId = Long.parseLong(userSelect.getItemAt(userSelect.getSelectedIndex()));
 
-        Passenger passenger = null;
-        for (Passenger p : this.passengers) {
+        PassengerModel passenger = null;
+        for (PassengerModel p : this.passengers) {
             if (p.getId() == passengerId) {
                 passenger = p;
             }
@@ -1626,7 +1626,7 @@ public class AirportFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
-        for (Passenger passenger : this.passengers) {
+        for (PassengerModel passenger : this.passengers) {
             model.addRow(new Object[]{passenger.getId(), passenger.getFullname(), passenger.getBirthDate(), passenger.calculateAge(), passenger.generateFullPhone(), passenger.getCountry(), passenger.getNumFlights()});
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -1644,7 +1644,7 @@ public class AirportFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) jTable4.getModel();
         model.setRowCount(0);
-        for (Plane plane : this.planes) {
+        for (PlaneModel plane : this.planes) {
             model.addRow(new Object[]{plane.getId(), plane.getBrand(), plane.getModel(), plane.getMaxCapacity(), plane.getAirline(), plane.getNumFlights()});
         }
     }//GEN-LAST:event_jButton5ActionPerformed

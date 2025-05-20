@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author edangulo
  */
-public class Plane implements Prototype<Plane> {
+public class PlaneModel implements Prototype<PlaneModel> {
 
     private final String id;
     private String brand;
@@ -20,7 +20,7 @@ public class Plane implements Prototype<Plane> {
     private String airline;
     private final ArrayList<Flight> flights;
 
-    public Plane(String id, String brand, String model, int maxCapacity, String airline) {
+    public PlaneModel(String id, String brand, String model, int maxCapacity, String airline) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -66,8 +66,8 @@ public class Plane implements Prototype<Plane> {
 
     // clone (Prototype)
     @Override
-    public Plane clone() {
-        Plane copy = new Plane(id, brand, model, maxCapacity, airline);
+    public PlaneModel clone() {
+        PlaneModel copy = new PlaneModel(id, brand, model, maxCapacity, airline);
         copy.getFlights().addAll(flights); // copia superficial
         return copy;
     }

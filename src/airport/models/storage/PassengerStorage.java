@@ -4,7 +4,7 @@
  */
 package airport.models.storage;
 
-import airport.models.persons.Passenger;
+import airport.models.persons.PassengerModel;
 import java.util.ArrayList;
 /**
  *
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class PassengerStorage extends Storage {
     private static PassengerStorage instance;
-    private ArrayList<Passenger> passengers;
+    private ArrayList<PassengerModel> passengers;
 
     private PassengerStorage() {
         this.passengers = new ArrayList<>();
@@ -27,17 +27,28 @@ public class PassengerStorage extends Storage {
 
     @Override
     public void addItem(Object object) {
-        Passenger p = (Passenger) object;
+        PassengerModel p = (PassengerModel) object;
         if (!passengers.contains(p)) {
             passengers.add(p);
         }
     }
 
-    public ArrayList<Passenger> getPassengers() {
+    public ArrayList<PassengerModel> getPassengers() {
         return passengers;
     }
 
     public boolean existsById(long id) {
         return passengers.stream().anyMatch(p -> p.getId() == id);
     }
+    
+    public PassengerModel findById(long id) {
+    for (PassengerModel p : passengers) {
+        if (p.getId() == id) {
+            return p;
+        }
+   }
+    return null;
+    }
+    
 }
+
