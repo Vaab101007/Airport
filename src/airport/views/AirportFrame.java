@@ -138,10 +138,10 @@ public class AirportFrame extends javax.swing.JFrame {
         txtFirstName = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         DAY = new javax.swing.JComboBox<>();
-        jButton8 = new javax.swing.JButton();
+        RegisterPassangerButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        IDPlaneTextField = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
         jTextField10 = new javax.swing.JTextField();
@@ -400,14 +400,14 @@ public class AirportFrame extends javax.swing.JFrame {
         DAY.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Day" }));
         jPanel2.add(DAY, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, -1, -1));
 
-        jButton8.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        jButton8.setText("Register");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        RegisterPassangerButton.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        RegisterPassangerButton.setText("Register");
+        RegisterPassangerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                RegisterPassangerButtonActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, -1, -1));
+        jPanel2.add(RegisterPassangerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, -1, -1));
 
         jTabbedPane1.addTab("Passenger registration", jPanel2);
 
@@ -418,9 +418,9 @@ public class AirportFrame extends javax.swing.JFrame {
         jPanel3.add(jLabel11);
         jLabel11.setBounds(53, 96, 22, 25);
 
-        jTextField8.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        jPanel3.add(jTextField8);
-        jTextField8.setBounds(180, 93, 130, 31);
+        IDPlaneTextField.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        jPanel3.add(IDPlaneTextField);
+        IDPlaneTextField.setBounds(180, 93, 130, 31);
 
         jLabel12.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel12.setText("Brand:");
@@ -1445,7 +1445,7 @@ public class AirportFrame extends javax.swing.JFrame {
         jTabbedPane1.setEnabledAt(11, true);
     }//GEN-LAST:event_userActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void RegisterPassangerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterPassangerButtonActionPerformed
         // TODO add your handling code here:
         String id = txtPassengerID.getText().trim(); //long
         String firstname = txtFirstName.getText().trim();
@@ -1464,8 +1464,8 @@ public class AirportFrame extends javax.swing.JFrame {
         if (response.getStatus() == Status.CREATED) {
             JOptionPane.showMessageDialog(this, response.getMessage(), "Pasajero creado", JOptionPane.INFORMATION_MESSAGE);
 
-            // 4. Actualizar el combo de pasajeros
-            userSelect.addItem(id);
+//            // 4. Actualizar el combo de pasajeros
+//            userSelect.addItem(id);
 
             // 5. Limpiar campos de entrada
             txtPassengerID.setText("");
@@ -1481,30 +1481,23 @@ public class AirportFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, response.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         this.userSelect.addItem("" + id);
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_RegisterPassangerButtonActionPerformed
 
     private void CreatePlaneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreatePlaneButtonActionPerformed
                                                 
-    // 1. Leer valores del formulario
-    String id = jTextField8.getText().trim();
+ String id = IDPlaneTextField.getText().trim();
     String brand = jTextField9.getText().trim();
     String model = jTextField10.getText().trim();
+    String maxCapacity = jTextField11.getText().trim();
     String airline = jTextField12.getText().trim();
-    String maxCapacity = jTextField11.getText().trim(); // se valida como int en el controlador
-    
 
-    // 2. Llamar al controlador
-    Response<PlaneModel> response = PlaneController.createPlane(id, brand, model, maxCapacity, airline);
+    // Cambié el orden aquí
+    Response<PlaneModel> response = PlaneController.createPlane(id, brand, model, airline, maxCapacity);
 
-    // 3. Evaluar respuesta y notificar al usuario
     if (response.getStatus() == Status.CREATED) {
         JOptionPane.showMessageDialog(this, response.getMessage(), "Avión creado", JOptionPane.INFORMATION_MESSAGE);
-
-        // 4. Agregar el ID al combo (si usás uno)
         jComboBox1.addItem(id);
-
-        // 5. Limpiar campos del formulario
-        jTextField8.setText("");
+        IDPlaneTextField.setText("");
         jTextField9.setText("");
         jTextField10.setText("");
         jTextField11.setText("");
@@ -1512,7 +1505,6 @@ public class AirportFrame extends javax.swing.JFrame {
     } else {
         JOptionPane.showMessageDialog(this, response.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-
     }//GEN-LAST:event_CreatePlaneButtonActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -1750,12 +1742,14 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> DAY3;
     private javax.swing.JComboBox<String> DAY4;
     private javax.swing.JComboBox<String> DAY5;
+    private javax.swing.JTextField IDPlaneTextField;
     private javax.swing.JComboBox<String> MONTH;
     private javax.swing.JComboBox<String> MONTH1;
     private javax.swing.JComboBox<String> MONTH2;
     private javax.swing.JComboBox<String> MONTH3;
     private javax.swing.JComboBox<String> MONTH4;
     private javax.swing.JComboBox<String> MONTH5;
+    private javax.swing.JButton RegisterPassangerButton;
     private javax.swing.JRadioButton administrator;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -1768,7 +1762,6 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -1871,7 +1864,6 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private airport.views.PanelRound panelRound1;
     private airport.views.PanelRound panelRound2;

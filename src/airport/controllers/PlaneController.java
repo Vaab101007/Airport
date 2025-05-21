@@ -53,7 +53,7 @@ public class PlaneController {
     }
 
     // Crear el avión
-    PlaneModel plane = new PlaneModel(id, brand, model, airline, maxCapacity);
+    PlaneModel plane = new PlaneModel(id, brand, model, maxCapacity, airline);
 
     // Validar con reglas internas (ID, existencia, etc.)
     PlaneController controller = new PlaneController();
