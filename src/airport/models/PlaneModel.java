@@ -4,7 +4,6 @@
  */
 package airport.models;
 
-import airport.models.flights.Flight;
 import java.util.ArrayList;
 
 /**

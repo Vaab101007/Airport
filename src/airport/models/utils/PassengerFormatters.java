@@ -4,7 +4,7 @@
  */
 package airport.models.utils;
 
-import airport.models.persons.PassengerModel;
+import airport.models.PassengerModel;
 
 /**
  *

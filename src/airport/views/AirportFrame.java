@@ -6,15 +6,17 @@ package airport.views;
 
 import airport.controllers.PassengerController;
 import airport.controllers.utils.Response;
+import airport.controllers.utils.Status;
 import airport.models.Location;
 import airport.models.PlaneModel;
-import airport.models.flights.Flight;
-import airport.models.persons.PassengerModel;
+import airport.models.Flight;
+import airport.models.PassengerModel;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,8 +25,10 @@ import javax.swing.table.DefaultTableModel;
  * @author edangulo
  */
 public class AirportFrame extends javax.swing.JFrame {
-    private PassengerController passengerController = new PassengerController();
+    
+    
 
+    private PassengerController passengerController = new PassengerController();
 
     /**
      * Creates new form AirportFrame
@@ -121,16 +125,16 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtPassengerID = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtLastName = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         MONTH = new javax.swing.JComboBox<>();
-        jTextField7 = new javax.swing.JTextField();
+        txtFirstName = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         DAY = new javax.swing.JComboBox<>();
         jButton8 = new javax.swing.JButton();
@@ -162,7 +166,7 @@ public class AirportFrame extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
-        jTextField19 = new javax.swing.JTextField();
+        txtPassengerId = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -353,8 +357,8 @@ public class AirportFrame extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 50, -1));
 
-        jTextField2.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 130, -1));
+        txtPassengerID.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        jPanel2.add(txtPassengerID, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 130, -1));
 
         jTextField3.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 90, -1));
@@ -373,8 +377,8 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel8.setText("-");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 30, -1));
 
-        jTextField6.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        jPanel2.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, 130, -1));
+        txtLastName.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        jPanel2.add(txtLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, 130, -1));
 
         jLabel9.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel9.setText("-");
@@ -384,8 +388,8 @@ public class AirportFrame extends javax.swing.JFrame {
         MONTH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Month" }));
         jPanel2.add(MONTH, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, -1, -1));
 
-        jTextField7.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        jPanel2.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 130, -1));
+        txtFirstName.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        jPanel2.add(txtFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 130, -1));
 
         jLabel10.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel10.setText("-");
@@ -420,7 +424,7 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel12.setText("Brand:");
         jPanel3.add(jLabel12);
-        jLabel12.setBounds(53, 157, 50, 25);
+        jLabel12.setBounds(53, 157, 52, 25);
 
         jTextField9.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jPanel3.add(jTextField9);
@@ -433,7 +437,7 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel13.setText("Model:");
         jPanel3.add(jLabel13);
-        jLabel13.setBounds(53, 216, 55, 25);
+        jLabel13.setBounds(53, 216, 57, 25);
 
         jTextField11.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jPanel3.add(jTextField11);
@@ -442,7 +446,7 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel14.setText("Max Capacity:");
         jPanel3.add(jLabel14);
-        jLabel14.setBounds(53, 276, 109, 25);
+        jLabel14.setBounds(53, 276, 114, 25);
 
         jTextField12.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jPanel3.add(jTextField12);
@@ -570,7 +574,7 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel22.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel22.setText("ID:");
 
-        jTextField19.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        txtPassengerId.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
 
         jLabel23.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel23.setText("Plane:");
@@ -682,7 +686,7 @@ public class AirportFrame extends javax.swing.JFrame {
                             .addComponent(jLabel23))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField19)
+                            .addComponent(txtPassengerId)
                             .addComponent(jComboBox1, 0, 130, Short.MAX_VALUE))))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -750,7 +754,7 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel22))
-                    .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPassengerId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
@@ -794,6 +798,8 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
+
+        txtPassengerId.getAccessibleContext().setAccessibleName("");
 
         jTabbedPane1.addTab("Flight registration", jPanel4);
 
@@ -897,7 +903,7 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(507, 507, 507)
                         .addComponent(jButton1)))
-                .addContainerGap(555, Short.MAX_VALUE))
+                .addContainerGap(552, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -971,7 +977,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField28, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(829, Short.MAX_VALUE))
+                .addContainerGap(827, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1416,7 +1422,7 @@ public class AirportFrame extends javax.swing.JFrame {
 
         }
         for (int i = 1; i < jTabbedPane1.getTabCount(); i++) {
-                jTabbedPane1.setEnabledAt(i, true);
+            jTabbedPane1.setEnabledAt(i, true);
         }
         jTabbedPane1.setEnabledAt(5, false);
         jTabbedPane1.setEnabledAt(6, false);
@@ -1440,19 +1446,39 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        long id = Long.parseLong(jTextField2.getText());
-        String firstname = jTextField7.getText();
-        String lastname = jTextField6.getText();
-        int year = Integer.parseInt(jTextField3.getText());
-        int month = Integer.parseInt(MONTH.getItemAt(MONTH.getSelectedIndex()));
-        int day = Integer.parseInt(DAY.getItemAt(DAY.getSelectedIndex()));
-        int phoneCode = Integer.parseInt(jTextField1.getText());
-        long phone = Long.parseLong(jTextField5.getText());
-        String country = jTextField4.getText();
+        String id = txtPassengerID.getText().trim(); //long
+        String firstname = txtFirstName.getText().trim();
+        String lastname = txtLastName.getText().trim();
+        String year = jTextField3.getText().trim(); ///int 
+        String month = MONTH.getSelectedItem().toString().trim(); //int 
+        String day = DAY.getSelectedItem().toString().trim();
+        String phoneCode = jTextField1.getText().trim(); //integer
+        String phone = jTextField5.getText().trim(); //long
+        String country = jTextField4.getText().trim();
 
-        LocalDate birthDate = LocalDate.of(year, month, day);
+        Response response = PassengerController.createPassenger(id, firstname, lastname, year, month, day, phoneCode, phone, country);
+       
 
-        this.passengers.add(new PassengerModel(id, firstname, lastname, birthDate, phoneCode, phone, country));
+        // 3. Evaluar respuesta y notificar al usuario
+        if (response.getStatus() == Status.CREATED) {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Pasajero creado", JOptionPane.INFORMATION_MESSAGE);
+
+            // 4. Actualizar el combo de pasajeros
+            userSelect.addItem(id);
+
+            // 5. Limpiar campos de entrada
+            txtPassengerID.setText("");
+            txtFirstName.setText("");
+            txtLastName.setText("");
+            jTextField3.setText("");
+            jTextField1.setText("");
+            jTextField5.setText("");
+            jTextField4.setText("");
+            MONTH.setSelectedIndex(0);
+            DAY.setSelectedIndex(0);
+        } else {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
         this.userSelect.addItem("" + id);
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -1461,7 +1487,7 @@ public class AirportFrame extends javax.swing.JFrame {
         String id = jTextField8.getText();
         String brand = jTextField9.getText();
         String model = jTextField10.getText();
-        int maxCapacity = Integer.parseInt(jTextField11.getText());
+        String maxCapacity = jTextField11.getText(); //int
         String airline = jTextField12.getText();
 
         this.planes.add(new PlaneModel(id, brand, model, maxCapacity, airline));
@@ -1475,8 +1501,8 @@ public class AirportFrame extends javax.swing.JFrame {
         String name = jTextField14.getText();
         String city = jTextField15.getText();
         String country = jTextField16.getText();
-        double latitude = Double.parseDouble(jTextField17.getText());
-        double longitude = Double.parseDouble(jTextField18.getText());
+        String latitude = jTextField17.getText(); //double
+        String longitude = jTextField18.getText(); // double
 
         this.locations.add(new Location(id, name, city, country, latitude, longitude));
 
@@ -1487,13 +1513,13 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-        String id = jTextField19.getText();
+        String id = txtPassengerId.getText();
         String planeId = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
         String departureLocationId = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
         String arrivalLocationId = jComboBox3.getItemAt(jComboBox3.getSelectedIndex());
         String scaleLocationId = jComboBox4.getItemAt(jComboBox4.getSelectedIndex());
-        int year = Integer.parseInt(jTextField21.getText());
-        int month = Integer.parseInt(MONTH1.getItemAt(MONTH1.getSelectedIndex()));
+        String year = jTextField21.getText(); //integer
+        String month = Integer.parseInt(MONTH1.getItemAt(MONTH1.getSelectedIndex()));
         int day = Integer.parseInt(DAY1.getItemAt(DAY1.getSelectedIndex()));
         int hour = Integer.parseInt(MONTH2.getItemAt(MONTH2.getSelectedIndex()));
         int minutes = Integer.parseInt(DAY2.getItemAt(DAY2.getSelectedIndex()));
@@ -1547,10 +1573,9 @@ public class AirportFrame extends javax.swing.JFrame {
         String phone = jTextField25.getText();
         String country = jTextField27.getText();
 
-        String birthDate = year+month+day;
-        
+        String birthDate = year + month + day;
 
-        Response response =PassengerController.createPassenger(id, firstname, lastname, birthDate, phoneCode, phone, country);
+        Response response = PassengerController.createPassenger(id, firstname, lastname, birthDate, phoneCode, phone, country);
 //        for (PassengerModel p : this.passengers) {
 //            if (id == p.getId()) {
 //                PassengerModel = p;
@@ -1667,11 +1692,10 @@ public class AirportFrame extends javax.swing.JFrame {
     private void userSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userSelectActionPerformed
         try {
             String id = userSelect.getSelectedItem().toString();
-            if (! id.equals(userSelect.getItemAt(0))) {
+            if (!id.equals(userSelect.getItemAt(0))) {
                 jTextField20.setText(id);
                 jTextField28.setText(id);
-            }
-            else{
+            } else {
                 jTextField20.setText("");
                 jTextField28.setText("");
             }
@@ -1815,8 +1839,6 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
@@ -1829,13 +1851,15 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private airport.views.PanelRound panelRound1;
     private airport.views.PanelRound panelRound2;
     private airport.views.PanelRound panelRound3;
+    private javax.swing.JTextField txtFirstName;
+    private javax.swing.JTextField txtLastName;
+    private javax.swing.JTextField txtPassengerID;
+    private javax.swing.JTextField txtPassengerId;
     private javax.swing.JRadioButton user;
     private javax.swing.JComboBox<String> userSelect;
     // End of variables declaration//GEN-END:variables

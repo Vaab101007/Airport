@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package airport.models.persons;
+package airport.models;
 
-import airport.models.flights.Flight;
+import airport.models.Flight;
 import airport.models.Prototype;
 import airport.models.Prototype;
 import java.time.LocalDate;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * @author edangulo
  */
-public class PassengerModel implements Prototype<PassengerModel>  {
+public class PassengerModel implements Prototype<PassengerModel>, HasFlights  {
     
     private final long id;
     private String firstname;
@@ -104,6 +104,11 @@ public class PassengerModel implements Prototype<PassengerModel>  {
         PassengerModel copy = new PassengerModel(id, firstname, lastname, birthDate, countryPhoneCode, phone, country);
         copy.getFlights().addAll(flights); // copia superficial
         return copy;
+    }
+    
+    @Override
+    public void addFlight(Flight flight) {
+        flights.add(flight);
     }
 
     
