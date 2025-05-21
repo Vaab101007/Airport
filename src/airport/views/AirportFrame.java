@@ -1464,8 +1464,6 @@ public class AirportFrame extends javax.swing.JFrame {
         if (response.getStatus() == Status.CREATED) {
             JOptionPane.showMessageDialog(this, response.getMessage(), "Pasajero creado", JOptionPane.INFORMATION_MESSAGE);
 
-//            // 4. Actualizar el combo de pasajeros
-//            userSelect.addItem(id);
 
             // 5. Limpiar campos de entrada
             txtPassengerID.setText("");

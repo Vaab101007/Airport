@@ -4,6 +4,8 @@
  */
 package airport.controllers;
 
+import airport.controllers.utils.PlaneParser;
+import airport.controllers.utils.PlaneValidator;
 import airport.controllers.utils.Response;
 import airport.controllers.utils.Status;
 import airport.models.PlaneModel;
@@ -22,82 +24,31 @@ import java.util.regex.Pattern;
  */
 public class PlaneController {
 
-    private final PlaneStorage storage = PlaneStorage.getInstance();
 
-    /**
-     * Registra un avión a partir de datos tipo String (desde la vista).
-     *
-     * @param id El ID del avión (formato XXYYYYY).
-     * @param brand Marca del avión.
-     * @param model Modelo del avión.
-     * @param airline Aerolínea a la que pertenece.
-     * @param maxCapacityStr Capacidad máxima (como string).
-     * @return Response con estado, mensaje y el avión clonado si fue exitoso.
-     */
+    private final PlaneStorage storage = PlaneStorage.getInstance();
+    private final PlaneValidator validator = new PlaneValidator();
+
     public static Response<PlaneModel> createPlane(
         String id, String brand, String model, String airline, String maxCapacityStr
-) {
-    // Validar que ningún campo esté vacío
-    if (id.isBlank() || brand.isBlank() || model.isBlank() || airline.isBlank() || maxCapacityStr.isBlank()) {
-        return new Response<>(Status.BAD_REQUEST, "Todos los campos deben estar completos", null);
-    }
-
-    int maxCapacity;
-    try {
-        maxCapacity = Integer.parseInt(maxCapacityStr);
-        if (maxCapacity <= 0) {
-            return new Response<>(Status.BAD_REQUEST, "La capacidad máxima debe ser mayor a 0", null);
-        }
-    } catch (NumberFormatException e) {
-        return new Response<>(Status.BAD_REQUEST, "Capacidad máxima inválida", null);
-    }
-
-    // Crear el avión
-    PlaneModel plane = new PlaneModel(id, brand, model, maxCapacity, airline);
-
-    // Validar con reglas internas (ID, existencia, etc.)
-    PlaneController controller = new PlaneController();
-    Response<PlaneModel> validation = controller.validatePlane(plane);
-    if (validation != null) {
-        return validation;
-    }
-
-    // Registrar y retornar éxito
-    controller.storage.addItem(plane);
-    return new Response<>(Status.CREATED, "Avión registrado con éxito", plane.clone());
-}
-
-
-    /**
-     * Valida los datos del avión antes de almacenarlo.
-     * @param plane Avión a validar.
-     * @return Response con error o null si todo está correcto.
-     */
-    private Response<PlaneModel> validatePlane(PlaneModel plane) {
-        // Validar ID único con formato XXYYYYY (2 letras mayúsculas + 5 dígitos)
-        if (!Pattern.matches("^[A-Z]{2}\\d{5}$", plane.getId())) {
-            return new Response<>(Status.BAD_REQUEST, "ID inválido: debe tener formato XXYYYYY (dos letras y cinco números)", null);
+    ) {
+        Response<PlaneModel> parsed = PlaneParser.parse(id, brand, model, airline, maxCapacityStr);
+        if (parsed.getStatus() != Status.OK) {
+            return parsed;
         }
 
-        if (storage.existsById(plane.getId())) {
-            return new Response<>(Status.BAD_REQUEST, "Ya existe un avión con ese ID", null);
+        PlaneModel plane = parsed.getData();
+        PlaneValidator validator = new PlaneValidator();
+        Response<PlaneModel> validation = validator.validate(plane);
+        if (validation != null) {
+            return validation;
         }
 
-        // Validar que los campos no estén vacíos
-        if (plane.getBrand().isBlank() || plane.getModel().isBlank() || plane.getAirline().isBlank()) {
-            return new Response<>(Status.BAD_REQUEST, "Marca, modelo y aerolínea no deben estar vacíos", null);
-        }
-
-        return null;
+        PlaneStorage.getInstance().addItem(plane);
+        return new Response<>(Status.CREATED, "Avión registrado con éxito", plane.clone());
     }
 
-    /**
-     * Variante que permite registrar directamente con un objeto ya creado.
-     * @param plane Objeto del avión.
-     * @return Response de éxito o error con clon del avión.
-     */
     public Response<PlaneModel> registerPlane(PlaneModel plane) {
-        Response<PlaneModel> validation = validatePlane(plane);
+        Response<PlaneModel> validation = validator.validate(plane);
         if (validation != null) {
             return validation;
         }
@@ -105,11 +56,6 @@ public class PlaneController {
         storage.addItem(plane);
         return new Response<>(Status.CREATED, "Avión registrado con éxito", plane.clone());
     }
-
-    
-
-    // PARA VALIDAR CADENAS (AUX) 
-    private boolean isBlank(String s) {
-        return s == null || s.isBlank();
-    }
 }
+
+

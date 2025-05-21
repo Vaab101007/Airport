@@ -20,22 +20,13 @@ import java.util.Comparator;
 public class PassengerController {
 
     private final PassengerStorage storage = PassengerStorage.getInstance();
-
+    
     // 💾 REGISTRO DESDE STRINGS (llamado por la vista)
     public static Response<PassengerModel> createPassenger(
             String idStr, String firstname, String lastname,
             String yearStr, String monthStr, String dayStr,
             String phoneCodeStr, String phoneStr, String country
     ) {
-        // Validar campos de texto antes de parsear
-        if (isBlank(firstname) || isBlank(lastname) || isBlank(country)) {
-            return new Response<>(Status.BAD_REQUEST, "Nombre, apellido y país no deben estar vacíos", null);
-        }
-        if (isBlank(idStr) || isBlank(yearStr) || isBlank(monthStr) || isBlank(dayStr)
-            || isBlank(phoneCodeStr) || isBlank(phoneStr)) {
-            return new Response<>(Status.BAD_REQUEST, "Todos los campos numéricos deben estar completos", null);
-        }
-
         long id;
         int year, month, day, phoneCode;
         long phone;
@@ -89,7 +80,7 @@ public class PassengerController {
             return new Response<>(Status.BAD_REQUEST, "Fecha de nacimiento inválida", null);
         }
 
-        if (isBlank(p.getFirstname()) || isBlank(p.getLastname()) || isBlank(p.getCountry())) {
+        if (p.getFirstname().isBlank() || p.getLastname().isBlank() || p.getCountry().isBlank()) {
             return new Response<>(Status.BAD_REQUEST, "Nombre, apellido y país no deben estar vacíos", null);
         }
 
@@ -128,10 +119,4 @@ public class PassengerController {
 
         return new Response<>(Status.OK, "Pasajero actualizado con éxito", original.clone());
     }
-
-    // MÉTODO AUXILIAR para evitar NullPointerException y usar en vez de isBlank() de Java 11+
-    private static boolean isBlank(String s) {
-        return s == null || s.trim().isEmpty();
-    }
 }
-
