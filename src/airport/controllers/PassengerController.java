@@ -58,7 +58,7 @@ public class PassengerController {
         return new Response<>(Status.CREATED, "Pasajero registrado con éxito", p.clone());
     }
 
-    // 🧾 VALIDACIÓN (privada)
+    // VALIDACIÓN (privada)
     private Response<PassengerModel> validatePassenger(PassengerModel p, boolean isUpdate) {
         if (p.getId() < 0 || String.valueOf(p.getId()).length() > 15) {
             return new Response<>(Status.BAD_REQUEST, "ID inválido (debe ser ≥ 0 y máx. 15 dígitos)", null);
@@ -87,7 +87,7 @@ public class PassengerController {
         return null;
     }
 
-    // ✍️ REGISTRO (con objeto directamente)
+    //  REGISTRO (con objeto directamente)
     public Response<PassengerModel> registerPassenger(PassengerModel p) {
         Response<PassengerModel> validation = validatePassenger(p, false);
         if (validation != null) {
@@ -98,7 +98,7 @@ public class PassengerController {
         return new Response<>(Status.CREATED, "Pasajero registrado con éxito", p.clone());
     }
 
-    // 🔁 ACTUALIZACIÓN
+    //  ACTUALIZACIÓN
     public Response<PassengerModel> updatePassenger(PassengerModel p) {
         Response<PassengerModel> validation = validatePassenger(p, true);
         if (validation != null) {

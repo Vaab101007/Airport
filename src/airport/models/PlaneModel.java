@@ -19,7 +19,7 @@ public class PlaneModel implements Prototype<PlaneModel> {
     private String airline;
     private final ArrayList<Flight> flights;
 
-    public PlaneModel(String id, String brand, String model, int maxCapacity, String airline) {
+    public PlaneModel(String id, String brand, String model, String airline, int maxCapacity) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -65,7 +65,7 @@ public class PlaneModel implements Prototype<PlaneModel> {
     // clone (Prototype)
     @Override
     public PlaneModel clone() {
-        PlaneModel copy = new PlaneModel(id, brand, model, maxCapacity, airline);
+        PlaneModel copy = new PlaneModel(id, brand, model, airline, maxCapacity);
         copy.getFlights().addAll(flights); // copia superficial
         return copy;
     }
