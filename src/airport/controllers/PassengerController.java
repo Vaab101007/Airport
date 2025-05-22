@@ -4,6 +4,8 @@
  */
 package airport.controllers;
 
+import airport.controllers.utils.PassengerParser;
+import airport.controllers.utils.PassengerValidator;
 import airport.controllers.utils.Response;
 import airport.models.PassengerModel;
 import java.time.LocalDate;
@@ -21,75 +23,25 @@ public class PassengerController {
 
     private final PassengerStorage storage = PassengerStorage.getInstance();
 
-    // 💾 REGISTRO DESDE STRINGS (llamado por la vista)
-    public static Response<PassengerModel> createPassenger(
+    // 📌 Vista llama este método con datos en formato String
+    public Response<PassengerModel> createPassenger(
             String idStr, String firstname, String lastname,
             String yearStr, String monthStr, String dayStr,
             String phoneCodeStr, String phoneStr, String country
     ) {
-        long id;
-        int year, month, day, phoneCode;
-        long phone;
-        LocalDate birthDate;
+        Response<PassengerModel> parsed = PassengerParser.parse(
+                idStr, firstname, lastname,
+                yearStr, monthStr, dayStr,
+                phoneCodeStr, phoneStr, country
+        );
 
-        try {
-            id = Long.parseLong(idStr);
-            year = Integer.parseInt(yearStr);
-            month = Integer.parseInt(monthStr);
-            day = Integer.parseInt(dayStr);
-            birthDate = LocalDate.of(year, month, day);
-            phoneCode = Integer.parseInt(phoneCodeStr);
-            phone = Long.parseLong(phoneStr);
-        } catch (NumberFormatException e) {
-            return new Response<>(Status.BAD_REQUEST, "Error de formato: ingresá solo números válidos", null);
-        } catch (RuntimeException e) {
-            return new Response<>(Status.BAD_REQUEST, "Fecha inválida", null);
+        if (parsed.getStatus() != Status.OK) {
+            return parsed;
         }
 
-        PassengerModel p = new PassengerModel(id, firstname, lastname, birthDate, phoneCode, phone, country);
+        PassengerModel p = parsed.getData();
 
-        PassengerController controller = new PassengerController();
-        Response<PassengerModel> validation = controller.validatePassenger(p, false);
-        if (validation != null) {
-            return validation;
-        }
-
-        controller.storage.addItem(p);
-        return new Response<>(Status.CREATED, "Pasajero registrado con éxito", p.clone());
-    }
-
-    // 🧾 VALIDACIÓN (privada)
-    private Response<PassengerModel> validatePassenger(PassengerModel p, boolean isUpdate) {
-        if (p.getId() < 0 || String.valueOf(p.getId()).length() > 15) {
-            return new Response<>(Status.BAD_REQUEST, "ID inválido (debe ser ≥ 0 y máx. 15 dígitos)", null);
-        }
-
-        if (!isUpdate && storage.existsById(p.getId())) {
-            return new Response<>(Status.BAD_REQUEST, "Ya existe un pasajero con ese ID", null);
-        }
-
-        if (p.getCountryPhoneCode() < 0 || String.valueOf(p.getCountryPhoneCode()).length() > 3) {
-            return new Response<>(Status.BAD_REQUEST, "Código de país inválido (máx. 3 dígitos)", null);
-        }
-
-        if (p.getPhone() < 0 || String.valueOf(p.getPhone()).length() > 11) {
-            return new Response<>(Status.BAD_REQUEST, "Teléfono inválido (máx. 11 dígitos)", null);
-        }
-
-        if (p.getBirthDate() == null || p.getBirthDate().isAfter(LocalDate.now())) {
-            return new Response<>(Status.BAD_REQUEST, "Fecha de nacimiento inválida", null);
-        }
-
-        if (p.getFirstname().isBlank() || p.getLastname().isBlank() || p.getCountry().isBlank()) {
-            return new Response<>(Status.BAD_REQUEST, "Nombre, apellido y país no deben estar vacíos", null);
-        }
-
-        return null;
-    }
-
-    // ✍️ REGISTRO (con objeto directamente)
-    public Response<PassengerModel> registerPassenger(PassengerModel p) {
-        Response<PassengerModel> validation = validatePassenger(p, false);
+        Response<PassengerModel> validation = PassengerValidator.validate(p, false, storage);
         if (validation != null) {
             return validation;
         }
@@ -98,9 +50,20 @@ public class PassengerController {
         return new Response<>(Status.CREATED, "Pasajero registrado con éxito", p.clone());
     }
 
-    // 🔁 ACTUALIZACIÓN
+    // 📌 Para registrar un pasajero directamente
+    public Response<PassengerModel> registerPassenger(PassengerModel p) {
+        Response<PassengerModel> validation = PassengerValidator.validate(p, false, storage);
+        if (validation != null) {
+            return validation;
+        }
+
+        storage.addItem(p);
+        return new Response<>(Status.CREATED, "Pasajero registrado con éxito", p.clone());
+    }
+
+    // 📌 Para actualizar un pasajero
     public Response<PassengerModel> updatePassenger(PassengerModel p) {
-        Response<PassengerModel> validation = validatePassenger(p, true);
+        Response<PassengerModel> validation = PassengerValidator.validate(p, true, storage);
         if (validation != null) {
             return validation;
         }
@@ -110,13 +73,36 @@ public class PassengerController {
             return new Response<>(Status.NOT_FOUND, "Pasajero no encontrado", null);
         }
 
+        // Actualizar los campos
         original.setFirstname(p.getFirstname());
         original.setLastname(p.getLastname());
         original.setBirthDate(p.getBirthDate());
+        original.setCountry(p.getCountry());
         original.setCountryPhoneCode(p.getCountryPhoneCode());
         original.setPhone(p.getPhone());
-        original.setCountry(p.getCountry());
 
         return new Response<>(Status.OK, "Pasajero actualizado con éxito", original.clone());
+    }
+
+    // 📌 Devolver todos los pasajeros ordenados por ID
+    public Response<ArrayList<PassengerModel>> getAllPassengers() {
+        ArrayList<PassengerModel> sorted = new ArrayList<>(storage.getPassengers());
+        sorted.sort(Comparator.comparingLong(PassengerModel::getId));
+
+        ArrayList<PassengerModel> clones = new ArrayList<>();
+        for (PassengerModel p : sorted) {
+            clones.add(p.clone());
+        }
+
+        return new Response<>(Status.OK, "Pasajeros obtenidos exitosamente.", clones);
+    }
+
+    // (opcional) Buscar por ID
+    public Response<PassengerModel> getPassengerById(long id) {
+        PassengerModel p = storage.findById(id);
+        if (p == null) {
+            return new Response<>(Status.NOT_FOUND, "Pasajero no encontrado", null);
+        }
+        return new Response<>(Status.OK, "Pasajero encontrado", p.clone());
     }
 }
