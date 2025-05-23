@@ -17,28 +17,33 @@ import java.util.Comparator;
  * @author vangu
  */
 public class LocationTableController {
-     public static Response<Void> updateLocationTable(DefaultTableModel model) {
+     public static Response updateLocationTable(DefaultTableModel model) {
         try {
-            model.setRowCount(0); // limpiar
+            LocationStorage storage = LocationStorage.getInstance();
+            ArrayList<Location> locations = storage.getLocations();
 
-            ArrayList<Location> locations = new ArrayList<>(LocationStorage.getInstance().getLocations());
-            if (locations.isEmpty()) {
-                return new Response<>(Status.NO_CONTENT, "No hay localizaciones registradas", null);
+            if (locations == null || locations.isEmpty()) {
+                model.setRowCount(0);
+                return new Response(Status.NO_CONTENT, "No hay localizaciones registradas", null);
             }
 
             locations.sort(Comparator.comparing(Location::getAirportId));
-            for (Location loc : locations) {
-                model.addRow(new Object[]{
-                    loc.getAirportId(),
-                    loc.getAirportName(),
-                    loc.getAirportCity(),
-                    loc.getAirportCountry()
-                });
+            model.setRowCount(0); // Limpia la tabla
+
+            for (Location l : locations) {
+                Object[] row = {
+                    l.getAirportId(),
+                    l.getAirportName(),
+                    l.getAirportCity(),
+                    l.getAirportCountry()
+                };
+                model.addRow(row);
             }
 
-            return new Response<>(Status.OK, "Tabla actualizada con éxito", null);
+            return new Response(Status.OK, "Localizaciones cargadas correctamente", null);
+
         } catch (Exception e) {
-            return new Response<>(Status.INTERNAL_SERVER_ERROR, "Error inesperado", null);
+            return new Response(Status.INTERNAL_SERVER_ERROR, "Error inesperado al cargar localizaciones", null);
         }
     }
 }

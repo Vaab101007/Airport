@@ -12,10 +12,11 @@ import java.time.LocalDate;
  * @author vangu
  */
 public class PassengerParser {
-     public static Response<Passenger> parse(
-        String idStr, String firstname, String lastname,
-        String yearStr, String monthStr, String dayStr,
-        String phoneCodeStr, String phoneStr, String country
+
+    public static Response<Passenger> parse(
+            String idStr, String firstname, String lastname,
+            String yearStr, String monthStr, String dayStr,
+            String phoneCodeStr, String phoneStr, String country
     ) {
         try {
             long id = Long.parseLong(idStr);
@@ -25,6 +26,10 @@ public class PassengerParser {
             int phoneCode = Integer.parseInt(phoneCodeStr.trim());
             long phone = Long.parseLong(phoneStr.trim());
             LocalDate birthDate = LocalDate.of(year, month, day);
+
+            System.out.println("ID: " + idStr);
+            System.out.println("Año: " + yearStr + ", Mes: " + monthStr + ", Día: " + dayStr);
+            System.out.println("PhoneCode: " + phoneCodeStr + ", Phone: " + phoneStr);
 
             Passenger p = new Passenger(id, firstname, lastname, birthDate, phoneCode, phone, country);
             return new Response<>(Status.OK, "Parseo exitoso", p);
