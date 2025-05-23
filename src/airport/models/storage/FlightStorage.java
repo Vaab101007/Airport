@@ -6,12 +6,15 @@ package airport.models.storage;
 
 import airport.models.Flight;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  *
  * @author vangu
  */
-public class FlightStorage extends Storage{
+
+public class FlightStorage extends Storage {
+
     private static FlightStorage instance;
     private ArrayList<Flight> flights;
 
@@ -28,18 +31,53 @@ public class FlightStorage extends Storage{
 
     @Override
     public void addItem(Object object) {
-        Flight f = (Flight) object;
-        if (!flights.contains(f)) {
-            flights.add(f);
+        Flight flight = (Flight) object;
+        if (!existsById(flight.getId())) {
+            flights.add(flight);
         }
     }
 
-    public ArrayList<Flight> getFlights() {
-        return flights;
+    public boolean existsById(String id) {
+        for (Flight f : flights) {
+            if (f.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public boolean existsById(String id) {
-        return flights.stream().anyMatch(f -> f.getId().equalsIgnoreCase(id));
+    public Flight findById(String id) {
+        for (Flight f : flights) {
+            if (f.getId().equals(id)) {
+                return f;
+            }
+        }
+        return null;
     }
-    
+
+    public boolean delayFlight(String id, int hours, int minutes) {
+        Flight f = findById(id);
+        if (f == null || (hours == 0 && minutes == 0)) return false;
+        f.delay(hours, minutes);
+        return true;
+    }
+
+    public boolean addPassengerToFlight(String flightId, airport.models.Passenger p) {
+        Flight f = findById(flightId);
+        if (f == null) return false;
+        f.addPassenger(p);
+        return true;
+    }
+
+    public ArrayList<Flight> getAllFlightsOrdered() {
+        ArrayList<Flight> result = new ArrayList<>();
+        for (Flight f : flights) {
+            result.add(f.clone()); // se pide usar Prototype
+        }
+        result.sort(Comparator.comparing(Flight::getDepartureDate));
+        return result;
+    }
 }
+
+    
+

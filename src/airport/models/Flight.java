@@ -5,7 +5,7 @@
 package airport.models;
 
 import airport.models.Location;
-import airport.models.PlaneModel;
+import airport.models.Plane;
 import airport.models.Prototype;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,8 +17,8 @@ import java.util.ArrayList;
 public class Flight implements Prototype<Flight> {
 
     private final String id;
-    private ArrayList<PassengerModel> passengers;
-    private PlaneModel plane;
+    private ArrayList<Passenger> passengers;
+    private Plane plane;
     private Location departureLocation;
     private Location scaleLocation;
     private Location arrivalLocation;
@@ -28,7 +28,7 @@ public class Flight implements Prototype<Flight> {
     private int hoursDurationScale;
     private int minutesDurationScale;
 
-    public Flight(String id, PlaneModel plane, Location departureLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival) {
+    public Flight(String id, Plane plane, Location departureLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival) {
         this.id = id;
         this.passengers = new ArrayList<>();
         this.plane = plane;
@@ -41,7 +41,7 @@ public class Flight implements Prototype<Flight> {
     
     }
 
-    public Flight(String id, PlaneModel plane, Location departureLocation, Location scaleLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival, int hoursDurationScale, int minutesDurationScale) {
+    public Flight(String id, Plane plane, Location departureLocation, Location scaleLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival, int hoursDurationScale, int minutesDurationScale) {
         this.id = id;
         this.passengers = new ArrayList<>();
         this.plane = plane;
@@ -54,10 +54,10 @@ public class Flight implements Prototype<Flight> {
         this.hoursDurationScale = hoursDurationScale;
         this.minutesDurationScale = minutesDurationScale;
 
-        this.plane.addFlight(this);
+ 
     }
 
-    public void addPassenger(PassengerModel passenger) {
+    public void addPassenger(Passenger passenger) {
         this.passengers.add(passenger);
     }
 
@@ -97,7 +97,7 @@ public class Flight implements Prototype<Flight> {
         return minutesDurationScale;
     }
 
-    public PlaneModel getPlane() {
+    public Plane getPlane() {
         return plane;
     }
 

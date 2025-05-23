@@ -4,7 +4,7 @@
  */
 package airport.controllers.utils;
 
-import airport.models.PassengerModel;
+import airport.models.Passenger;
 import java.time.LocalDate;
 
 /**
@@ -12,25 +12,25 @@ import java.time.LocalDate;
  * @author vangu
  */
 public class PassengerParser {
-     public static Response<PassengerModel> parse(
+     public static Response<Passenger> parse(
         String idStr, String firstname, String lastname,
         String yearStr, String monthStr, String dayStr,
         String phoneCodeStr, String phoneStr, String country
     ) {
         try {
             long id = Long.parseLong(idStr);
-            int year = Integer.parseInt(yearStr);
-            int month = Integer.parseInt(monthStr);
-            int day = Integer.parseInt(dayStr);
-            int phoneCode = Integer.parseInt(phoneCodeStr);
-            long phone = Long.parseLong(phoneStr);
+            int year = Integer.parseInt(yearStr.trim());
+            int month = Integer.parseInt(monthStr.trim());
+            int day = Integer.parseInt(dayStr.trim());
+            int phoneCode = Integer.parseInt(phoneCodeStr.trim());
+            long phone = Long.parseLong(phoneStr.trim());
             LocalDate birthDate = LocalDate.of(year, month, day);
 
-            PassengerModel p = new PassengerModel(id, firstname, lastname, birthDate, phoneCode, phone, country);
+            Passenger p = new Passenger(id, firstname, lastname, birthDate, phoneCode, phone, country);
             return new Response<>(Status.OK, "Parseo exitoso", p);
 
         } catch (NumberFormatException e) {
-            return new Response<>(Status.BAD_REQUEST, "Error de formato: ingresá solo números válidos", null);
+            return new Response<>(Status.BAD_REQUEST, "Error de formato: ingresa solo números válidos", null);
         } catch (RuntimeException e) {
             return new Response<>(Status.BAD_REQUEST, "Fecha inválida", null);
         }

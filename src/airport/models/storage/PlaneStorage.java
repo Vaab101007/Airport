@@ -5,7 +5,7 @@
 package airport.models.storage;
 
 
-import airport.models.PlaneModel;
+import airport.models.Plane;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class PlaneStorage extends Storage{
     private static PlaneStorage instance;
-    private ArrayList<PlaneModel> planes;
+    private ArrayList<Plane> planes;
 
     private PlaneStorage() {
         this.planes = new ArrayList<>();
@@ -29,13 +29,13 @@ public class PlaneStorage extends Storage{
 
     @Override
     public void addItem(Object object) {
-        PlaneModel p = (PlaneModel) object;
+        Plane p = (Plane) object;
         if (!planes.contains(p)) {
             planes.add(p);
         }
     }
 
-    public ArrayList<PlaneModel> getPlanes() {
+    public ArrayList<Plane> getPlanes() {
         return planes;
     }
 

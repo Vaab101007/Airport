@@ -4,7 +4,7 @@
  */
 package airport.controllers.utils;
 
-import airport.models.PlaneModel;
+import airport.models.Plane;
 
 /**
  *
@@ -12,7 +12,7 @@ import airport.models.PlaneModel;
  */
 public class PlaneParser {
 
-    public static Response<PlaneModel> parse(
+    public static Response<Plane> parse(
         String id, String brand, String model, String airline, String maxCapacityStr
     ) {
         if (id.isBlank() || brand.isBlank() || model.isBlank() || airline.isBlank() || maxCapacityStr.isBlank()) {
@@ -25,7 +25,7 @@ public class PlaneParser {
                 return new Response<>(Status.BAD_REQUEST, "La capacidad máxima debe ser mayor a 0", null);
             }
 
-            PlaneModel plane = new PlaneModel(id, brand, model, maxCapacity, airline);
+            Plane plane = new Plane(id, brand, model, maxCapacity, airline);
             return new Response<>(Status.OK, "Parseo exitoso", plane);
 
         } catch (NumberFormatException e) {

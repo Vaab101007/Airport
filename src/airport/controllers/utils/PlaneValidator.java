@@ -8,7 +8,7 @@ package airport.controllers.utils;
  *
  * @author isisp
  */
-import airport.models.PlaneModel;
+import airport.models.Plane;
 import airport.models.storage.PlaneStorage;
 import java.util.regex.Pattern;
 
@@ -16,7 +16,7 @@ public class PlaneValidator {
 
     private final PlaneStorage storage = PlaneStorage.getInstance();
 
-    public Response<PlaneModel> validate(PlaneModel plane) {
+    public Response<Plane> validate(Plane plane) {
         if (!Pattern.matches("^[A-Z]{2}\\d{5}$", plane.getId())) {
             return new Response<>(Status.BAD_REQUEST, "ID inválido: debe tener formato XXYYYYY (dos letras y cinco números)", null);
         }

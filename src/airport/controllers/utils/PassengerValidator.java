@@ -4,7 +4,7 @@
  */
 package airport.controllers.utils;
 
-import airport.models.PassengerModel;
+import airport.models.Passenger;
 import airport.models.storage.PassengerStorage;
 import java.time.LocalDate;
 
@@ -14,7 +14,7 @@ import java.time.LocalDate;
  */
 public class PassengerValidator {
     
-    public static Response<PassengerModel> validate(PassengerModel p, boolean isUpdate, PassengerStorage storage) {
+    public static Response<Passenger> validate(Passenger p, boolean isUpdate, PassengerStorage storage) {
         if (p.getId() < 0 || String.valueOf(p.getId()).length() > 15) {
             return new Response<>(Status.BAD_REQUEST, "ID inválido (≥ 0 y máx. 15 dígitos)", null);
         }

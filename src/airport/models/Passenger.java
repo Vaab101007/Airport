@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * @author edangulo
  */
-public class PassengerModel implements Prototype<PassengerModel>, HasFlights  {
+public class Passenger implements Prototype<Passenger>, HasFlights  {
     
     private final long id;
     private String firstname;
@@ -26,7 +26,7 @@ public class PassengerModel implements Prototype<PassengerModel>, HasFlights  {
     private String country;
     private ArrayList<Flight> flights;
 
-    public PassengerModel(long id, String firstname, String lastname, LocalDate birthDate, int countryPhoneCode, long phone, String country) {
+    public Passenger(long id, String firstname, String lastname, LocalDate birthDate, int countryPhoneCode, long phone, String country) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -100,8 +100,8 @@ public class PassengerModel implements Prototype<PassengerModel>, HasFlights  {
     
     // NUEVO!!!
     @Override
-    public PassengerModel clone() {
-        PassengerModel copy = new PassengerModel(id, firstname, lastname, birthDate, countryPhoneCode, phone, country);
+    public Passenger clone() {
+        Passenger copy = new Passenger(id, firstname, lastname, birthDate, countryPhoneCode, phone, country);
         copy.getFlights().addAll(flights); // copia superficial
         return copy;
     }
