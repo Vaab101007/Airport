@@ -4,11 +4,14 @@
  */
 package airport.controllers.tables;
 
+import airport.controllers.PassengerController;
 import airport.controllers.utils.Response;
 import airport.controllers.utils.Status;
 import airport.models.Flight;
 import airport.models.Passenger;
 import airport.models.storage.PassengerStorage;
+import airport.models.storage.FlightStorage;
+import airport.models.storage.Storage;
 import airport.models.utils.PassengerCalcs;
 import airport.models.utils.PassengerFormatters;
 import java.util.ArrayList;
@@ -52,32 +55,5 @@ public class PassengerTableController {
             return new Response(Status.INTERNAL_SERVER_ERROR, "Error inesperado al cargar pasajeros", null);
         }
     }
-     
-     
-     // 📌 Obtener vuelos de un pasajero (ordenados por fecha de salida)
-public Response<ArrayList<Flight>> getFlightsOfPassenger(long passengerId) {
-    Passenger p = storage.findById(passengerId);
-    if (p == null) {
-        return new Response<>(Status.NOT_FOUND, "Pasajero no encontrado", null);
-    }
-
-    ArrayList<Flight> allFlights = airport.models.storage.FlightStorage.getInstance().getAllFlightsOrdered();
-    ArrayList<Flight> result = new ArrayList<>();
-
-    for (Flight f : allFlights) {
-        for (Passenger fp : f.getPassengers()) {
-            if (fp.getId() == passengerId) {
-                result.add(f.clone());
-                break;
-            }
-        }
-    }
-
-    if (result.isEmpty()) {
-        return new Response<>(Status.NO_CONTENT, "El pasajero no tiene vuelos asignados", null);
-    }
-
-    return new Response<>(Status.OK, "Vuelos del pasajero obtenidos correctamente", result);
-}
 
 }
