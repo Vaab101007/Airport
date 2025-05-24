@@ -13,18 +13,19 @@ import airport.models.Location;
 import airport.models.Passenger;
 import airport.models.Plane;
 import airport.models.storage.FlightStorage;
+import airport.models.storage.PassengerStorage;
 import airport.models.storage.PlaneStorage;
-
 
 /**
  *
  * @author isisp
  */
 public class FlightController {
+
     private final FlightStorage storage = FlightStorage.getInstance();
     private final FlightValidator validator = new FlightValidator();
-    
-        public Response<Flight> createFlight(
+
+    public Response<Flight> createFlight(
             String id,
             Plane plane,
             Location departure,
@@ -53,10 +54,10 @@ public class FlightController {
         if (validation != null) {
             return validation;
         }
-        
+
         PlaneStorage planeStorage = PlaneStorage.getInstance();
         Plane storedPlane = planeStorage.findById(plane.getId());
-        
+
         storage.addItem(flight);
         return new Response<>(Status.CREATED, "Vuelo registrado correctamente", flight.clone());
     }
@@ -64,7 +65,9 @@ public class FlightController {
     // Vista llama este método con un objeto Flight ya parseado
     public Response<Flight> registerFlight(Flight flight) {
         Response<Flight> validation = validator.validate(flight);
-        if (validation != null) return validation;
+        if (validation != null) {
+            return validation;
+        }
 
         storage.addItem(flight);
         return new Response<>(Status.CREATED, "Vuelo registrado correctamente", flight.clone());
@@ -81,9 +84,9 @@ public class FlightController {
     }
 
     // Retardar vuelo por horas y minutos
-     public Response<Flight> delayFlight(String idStr, String hoursStr, String minutesStr) {
-     int hours, minutes;
-     try {
+    public Response<Flight> delayFlight(String idStr, String hoursStr, String minutesStr) {
+        int hours, minutes;
+        try {
             hours = Integer.parseInt(hoursStr);
             minutes = Integer.parseInt(minutesStr);
         } catch (NumberFormatException e) {
@@ -115,6 +118,16 @@ public class FlightController {
         return new Response<>(Status.OK, "Vuelo encontrado", flight.clone());
     }
 
+    public boolean linkPassengerToFlight(String flightId, long passengerId) {
+        Flight f = storage.findById(flightId);
+        Passenger p = PassengerStorage.getInstance().findById(passengerId);
+        if (f == null || p == null) {
+            return false;
+        }
 
+        f.addPassenger(p);
+        p.addFlight(f);
+        return true;
+    }
 
 }

@@ -12,7 +12,6 @@ import java.util.Comparator;
  *
  * @author vangu
  */
-
 public class FlightStorage extends Storage {
 
     private static FlightStorage instance;
@@ -57,38 +56,36 @@ public class FlightStorage extends Storage {
 
     public boolean delayFlight(String id, int hours, int minutes) {
         Flight f = findById(id);
-        if (f == null || (hours == 0 && minutes == 0)) return false;
+        if (f == null || (hours == 0 && minutes == 0)) {
+            return false;
+        }
         f.delay(hours, minutes);
         return true;
     }
 
     public boolean addPassengerToFlight(String flightId, airport.models.Passenger p) {
         Flight f = findById(flightId);
-        if (f == null) return false;
+        if (f == null) {
+            return false;
+        }
         f.addPassenger(p);
         return true;
     }
-    
-    public int countFlightsByPlaneId(String planeId) {
-    int count = 0;
-    for (Flight f : flights) {
-        if (f.getPlane() != null && planeId.equals(f.getPlane().getId())) {
-            count++;
-        }
-    }
-    return count;
-}
 
+    public int countFlightsByPlaneId(String planeId) {
+        int count = 0;
+        for (Flight f : flights) {
+            if (f.getPlane() != null && planeId.equals(f.getPlane().getId())) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     public ArrayList<Flight> getAllFlightsOrdered() {
-        ArrayList<Flight> result = new ArrayList<>();
-        for (Flight f : flights) {
-            result.add(f.clone()); // se pide usar Prototype
-        }
+        ArrayList<Flight> result = new ArrayList<>(flights); // copia directa, sin clone
         result.sort(Comparator.comparing(Flight::getDepartureDate));
         return result;
     }
+
 }
-
-    
-
