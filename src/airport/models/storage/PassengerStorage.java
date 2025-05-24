@@ -6,6 +6,9 @@ package airport.models.storage;
 
 import airport.models.Passenger;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 /**
  *
  * @author vangu
@@ -14,7 +17,7 @@ public class PassengerStorage extends Storage {
     private static PassengerStorage instance;
     private ArrayList<Passenger> passengers;
 
-    private PassengerStorage() {
+    PassengerStorage() {
         this.passengers = new ArrayList<>();
     }
 
@@ -49,6 +52,24 @@ public class PassengerStorage extends Storage {
    }
     return null;
     }
-    
+        public List<Passenger> getAllPassengers() {
+        List<Passenger> sortedList = new ArrayList<>();
+
+        // Clonar todos los pasajeros
+        for (Passenger p : passengers) {
+            sortedList.add(p.clone());
+        }
+
+        // Ordenar por ID usando Comparator
+        Collections.sort(sortedList, new Comparator<Passenger>() {
+            @Override
+            public int compare(Passenger p1, Passenger p2) {
+                return Long.compare(p1.getId(), p2.getId());
+            }
+        }
+        );
+        return sortedList;
+}
+
 }
 

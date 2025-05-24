@@ -1613,7 +1613,7 @@
                           </Group>
                           <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jComboBox5" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtFlights_addPassengerToFlight" min="-2" max="-2" attributes="0"/>
                               <Component id="jTextField28" min="-2" pref="130" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="860" max="32767" attributes="0"/>
@@ -1639,7 +1639,7 @@
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel45" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtFlights_addPassengerToFlight" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="288" max="32767" attributes="0"/>
                           <Component id="jButton12" min="-2" pref="40" max="-2" attributes="0"/>
@@ -1673,7 +1673,7 @@
                     <Property name="text" type="java.lang.String" value="Flight:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox5">
+                <Component class="javax.swing.JComboBox" name="txtFlights_addPassengerToFlight">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -2113,7 +2113,7 @@
                                   <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jComboBox6" pref="136" max="32767" attributes="0"/>
-                                      <Component id="jComboBox7" max="32767" attributes="0"/>
+                                      <Component id="txtFlights_delayFlights" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -2132,7 +2132,7 @@
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel47" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox7" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtFlights_delayFlights" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -2183,7 +2183,7 @@
                     <Property name="text" type="java.lang.String" value="ID:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox7">
+                <Component class="javax.swing.JComboBox" name="txtFlights_delayFlights">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>

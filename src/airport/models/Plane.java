@@ -52,6 +52,10 @@ public class Plane implements Prototype<Plane> {
         return flights; 
     }
     
+    public void addFlight(Flight flight) {
+    this.flights.add(flight);
+}
+
     public void setBrand(String brand) { 
         this.brand = brand;
     }

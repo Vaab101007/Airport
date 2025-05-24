@@ -18,7 +18,7 @@ public class FlightStorage extends Storage {
     private static FlightStorage instance;
     private ArrayList<Flight> flights;
 
-    private FlightStorage() {
+    FlightStorage() {
         this.flights = new ArrayList<>();
     }
 
@@ -68,6 +68,17 @@ public class FlightStorage extends Storage {
         f.addPassenger(p);
         return true;
     }
+    
+    public int countFlightsByPlaneId(String planeId) {
+    int count = 0;
+    for (Flight f : flights) {
+        if (f.getPlane() != null && planeId.equals(f.getPlane().getId())) {
+            count++;
+        }
+    }
+    return count;
+}
+
 
     public ArrayList<Flight> getAllFlightsOrdered() {
         ArrayList<Flight> result = new ArrayList<>();
