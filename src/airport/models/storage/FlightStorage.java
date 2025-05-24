@@ -5,8 +5,10 @@
 package airport.models.storage;
 
 import airport.models.Flight;
+import airport.models.Passenger;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  *
@@ -85,6 +87,19 @@ public class FlightStorage extends Storage {
     public ArrayList<Flight> getAllFlightsOrdered() {
         ArrayList<Flight> result = new ArrayList<>(flights); // copia directa, sin clone
         result.sort(Comparator.comparing(Flight::getDepartureDate));
+        return result;
+    }
+    
+    public List<Flight> findByPassengerId(long passengerId) {
+        List<Flight> result = new ArrayList<>();
+        for (Flight flight : flights) {
+            for (Passenger p : flight.getPassengers()) {
+                if (p.getId() == passengerId) {
+                    result.add(flight);
+                    break;
+                }
+            }
+        }
         return result;
     }
 

@@ -85,28 +85,35 @@ public class FlightController {
 
     // Retardar vuelo por horas y minutos
     public Response<Flight> delayFlight(String idStr, String hoursStr, String minutesStr) {
-        int hours, minutes;
-        try {
-            hours = Integer.parseInt(hoursStr);
-            minutes = Integer.parseInt(minutesStr);
-        } catch (NumberFormatException e) {
-            return new Response<>(Status.BAD_REQUEST, "Horas o minutos inválidos", null);
-        }
+    int hours, minutes;
+    try {
+        hours = Integer.parseInt(hoursStr);
+        minutes = Integer.parseInt(minutesStr);
+    } catch (NumberFormatException e) {
+        return new Response<>(Status.BAD_REQUEST, "Horas o minutos inválidos", null);
+    }
 
-        if (hours == 0 && minutes == 0) {
-            return new Response<>(Status.BAD_REQUEST, "El retraso debe ser mayor a 00:00", null);
-        }
+    if (hours == 0 && minutes == 0) {
+        return new Response<>(Status.BAD_REQUEST, "El retraso debe ser mayor a 00:00", null);
+    }
 
-        // 2. Verificar que el vuelo exista
-        Flight flight = storage.findById(idStr);
-        if (flight == null) {
-            return new Response<>(Status.NOT_FOUND, "Vuelo no encontrado", null);
-        }
-        // 3. Aplicar el retraso
-        flight.delay(hours, minutes);
-        // 4. El objeto ya está modificado en memoria → el storage está actualizado automáticamente
-        return new Response<>(Status.OK, "Vuelo retrasado exitosamente", flight.clone());
+    // 2. Verificar que el vuelo exista
+    Flight flight = storage.findById(idStr);
+    if (flight == null) {
+        return new Response<>(Status.NOT_FOUND, "Vuelo no encontrado", null);
+    }
 
+    // ➕ Mostrar hora antes del retraso
+    System.out.println("Hora original de salida: " + flight.getDepartureDate());
+
+    // 3. Aplicar el retraso
+    flight.delay(hours, minutes);
+
+    // ➕ Mostrar hora después del retraso
+    System.out.println("Hora nueva de salida: " + flight.getDepartureDate());
+
+    // 4. El objeto ya está modificado en memoria → el storage está actualizado automáticamente
+    return new Response<>(Status.OK, "Vuelo retrasado exitosamente", flight.clone());
     }
 
     // Buscar vuelo por ID

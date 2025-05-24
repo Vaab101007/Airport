@@ -65,6 +65,8 @@ public class Plane implements Prototype<Plane> {
     public void setAirline(String airline) { 
         this.airline = airline; 
     }
+    
+    
 
     // clone (Prototype)
     @Override

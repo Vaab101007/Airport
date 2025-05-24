@@ -16,6 +16,9 @@ import airport.models.utils.PassengerCalcs;
 import airport.models.utils.PassengerFormatters;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -55,5 +58,25 @@ public class PassengerTableController {
             return new Response(Status.INTERNAL_SERVER_ERROR, "Error inesperado al cargar pasajeros", null);
         }
     }
+     
+     
+    public void viewUserFlight(JTable table, JComboBox<String> comboBox) {
+   String selectedItem = (String) comboBox.getSelectedItem();
+    if (selectedItem == null || selectedItem.isEmpty()) return;
 
+    String selectedPassengerId = selectedItem.split(" ")[0]; // o solo selectedItem si es solo el ID
+
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+    model.setRowCount(0);  // limpiar filas existentes
+
+    List<Flight> flights = FlightStorage.getInstance().findByPassengerId(Long.parseLong(selectedPassengerId));
+
+    for (Flight f : flights) {
+        model.addRow(new Object[]{
+            f.getId(),
+            f.getDepartureDate(),
+            f.calculateArrivalDate()
+        });
+    }
+    }
 }

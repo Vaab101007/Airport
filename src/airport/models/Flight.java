@@ -7,8 +7,10 @@ package airport.models;
 import airport.models.Location;
 import airport.models.Plane;
 import airport.models.Prototype;
+import airport.models.storage.FlightStorage;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -116,6 +118,11 @@ public class Flight implements Prototype<Flight> {
     public int getNumPassengers() {
         return passengers.size();
     }
+    
+    public ArrayList<Passenger> getPassengers() {
+    return passengers;
+}
+
 
     @Override
     public Flight clone() {
