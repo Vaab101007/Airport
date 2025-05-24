@@ -1510,6 +1510,10 @@ public class AirportFrame extends javax.swing.JFrame {
 
         if (response.getStatus() == Status.CREATED) {
             JOptionPane.showMessageDialog(this, response.getMessage(), "Avión Registrado", JOptionPane.INFORMATION_MESSAGE);
+            
+            Plane created = response.getData();
+            this.planes.add(created);           
+
             Plane_RegFlight.addItem(id);
             txtPIaneID.setText("");
             txtPlaneBrand.setText("");
@@ -1519,6 +1523,8 @@ public class AirportFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, response.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+        
     }//GEN-LAST:event_CreatePlaneButtonActionPerformed
 
     private void createLocationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createLocationButtonActionPerformed
@@ -1540,6 +1546,9 @@ public class AirportFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, response.getMessage(), "Success " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
 
+            Location created = response.getData();
+            this.locations.add(created);  
+                 
             // 4. Si fue exitoso: actualizo combos y limpio campos
             String createdId = response.getData().getAirportId();
             DepartureLoc_RegFlight.addItem(createdId);
@@ -1569,7 +1578,12 @@ public class AirportFrame extends javax.swing.JFrame {
         String hour = textHourDepartureDate_RegFlight.getSelectedItem().toString().trim();
         String minutes = DAY2.getSelectedItem().toString().trim();
 
-        String departureDateStr = year + "-" + month + "-" + day + "T" + hour + ":" + minutes;
+        String departureDateStr = String.format("%04d-%02d-%02dT%02d:%02d",
+                Integer.parseInt(year),
+                Integer.parseInt(month),
+                Integer.parseInt(day),
+                Integer.parseInt(hour),
+                Integer.parseInt(minutes));
 
         String hoursArrStr = txtHourDuration_RegFlight.getSelectedItem().toString().trim();
         String minutesArrStr = txtMinsDuration_RegFlight.getSelectedItem().toString().trim();

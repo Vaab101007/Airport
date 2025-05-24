@@ -43,6 +43,16 @@ public class PlaneStorage extends Storage{
         return planes.stream().anyMatch(p -> p.getId().equalsIgnoreCase(id));
     }
     
+    
+    public Plane findById(String id) {
+    for (Plane p : planes) {
+        if (p.getId().equalsIgnoreCase(id)) {
+            return p;
+        }
+    }
+    return null;
+}
+
 
 
 

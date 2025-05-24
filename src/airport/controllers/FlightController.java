@@ -13,6 +13,7 @@ import airport.models.Location;
 import airport.models.Passenger;
 import airport.models.Plane;
 import airport.models.storage.FlightStorage;
+import airport.models.storage.PlaneStorage;
 
 
 /**
@@ -52,7 +53,10 @@ public class FlightController {
         if (validation != null) {
             return validation;
         }
-
+        
+        PlaneStorage planeStorage = PlaneStorage.getInstance();
+        Plane storedPlane = planeStorage.findById(plane.getId());
+        
         storage.addItem(flight);
         return new Response<>(Status.CREATED, "Vuelo registrado correctamente", flight.clone());
     }

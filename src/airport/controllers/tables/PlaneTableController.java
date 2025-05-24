@@ -32,14 +32,17 @@ public class PlaneTableController {
             model.setRowCount(0); // limpia la tabla antes de llenarla
 
             for (Plane plane : planes) {
-                Object[] row = {
-                    plane.getId(),
-                    plane.getBrand(),
-                    plane.getModel(),
-                    plane.getAirline(),
-                    plane.getMaxCapacity()
-                };
-                model.addRow(row);
+            int numFlights = (plane.getFlights() != null) ? plane.getFlights().size() : 0;
+
+               Object[] row = {
+                   plane.getId(),
+                   plane.getBrand(),
+                   plane.getModel(),
+                   plane.getMaxCapacity(),
+                   plane.getAirline(),
+                   numFlights 
+               };
+               model.addRow(row);
             }
 
             return new Response(Status.OK, "Aviones cargados correctamente", null);
@@ -49,7 +52,7 @@ public class PlaneTableController {
         }
     }
     
-    //FALTA AÑADIR NUM DE VUELOS POR AVION 
+
 }
 
 
