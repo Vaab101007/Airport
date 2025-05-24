@@ -81,7 +81,6 @@ public class AirportFrame extends javax.swing.JFrame {
         this.planes = (ArrayList<Plane>) PlaneStorage.getInstance().getAllPlanes();
         this.locations = LocationStorage.getInstance().getAllLocations();
 
-
         ComboDataFiller.LoadPassenger(userSelect);
         ComboDataFiller.LoadPlanes(Plane_RegFlight);
         ComboDataFiller.LoadLocations(DepartureLoc_RegFlight);
@@ -1653,15 +1652,15 @@ public class AirportFrame extends javax.swing.JFrame {
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(this, response.getMessage(), "Advertencia " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-                
-        //✅ 5. Si fue exitoso, agregar el vuelo al avión y refrescar la tabla
-        Flight newFlight = response.getData();
-        plane.addFlight(newFlight); // <-- asegúrate que exista este método en tu clase Plane
 
-        // 🔄 actualizar tabla de aviones
-        DefaultTableModel model = (DefaultTableModel) planesTable.getModel(); // usa el nombre real de tu tabla aquí
-        PlaneTableController.updatePlaneTable(model);
-        
+            //✅ 5. Si fue exitoso, agregar el vuelo al avión y refrescar la tabla
+            Flight newFlight = response.getData();
+            plane.addFlight(newFlight); // <-- asegúrate que exista este método en tu clase Plane
+
+            // 🔄 actualizar tabla de aviones
+            DefaultTableModel model = (DefaultTableModel) planesTable.getModel(); // usa el nombre real de tu tabla aquí
+            PlaneTableController.updatePlaneTable(model);
+
             JOptionPane.showMessageDialog(this, response.getMessage(), "Éxito " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
             txtFlights_addPassengerToFlight.addItem(id); // actualiza selector de vuelos
         }
@@ -1723,40 +1722,34 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void addFlightsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFlightsButtonActionPerformed
         // TODO add your handling code here:
-        long passengerId = Long.parseLong(jTextField28.getText());
+
+        // Obtener el texto del campo de ID del pasajero
+        String idText = jTextField28.getText().trim();
+
+        // Validar si está vacío
+        if (idText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor ingresa el ID del pasajero.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        long passengerId;
+
+        try {
+            passengerId = Long.parseLong(idText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El ID del pasajero debe ser un número válido.", "Formato inválido", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Obtener el ID del vuelo desde el combo
         String flightId = txtFlights_addPassengerToFlight.getItemAt(txtFlights_addPassengerToFlight.getSelectedIndex());
 
-//// Buscar pasajero con el controlador
-//        Response<Passenger> passengerResponse = passengerController.getPassengerById(passengerId);
-//        if (passengerResponse.getStatus() != Status.OK) {
-//            JOptionPane.showMessageDialog(this, passengerResponse.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        Passenger passenger = passengerResponse.getData();
-//
-//// Buscar vuelo con el controlador
-//        Response<Flight> flightResponse = flightController.getFlightById(flightId);
-//        if (flightResponse.getStatus() != Status.OK) {
-//            JOptionPane.showMessageDialog(this, flightResponse.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        Flight flight = flightResponse.getData();
-//
-//// Vincular pasajero y vuelo
-//        passenger.addFlight(flight);
-//        flight.addPassenger(passenger);
-//
-//// Mostrar éxito
-//        JOptionPane.showMessageDialog(this, "Pasajero añadido al vuelo", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        // Llamar al método del controlador que enlaza pasajero y vuelo
+        // Intentar vincular
         boolean success = flightController.linkPassengerToFlight(flightId, passengerId);
 
-        // Mostrar resultado al usuario
         if (success) {
             JOptionPane.showMessageDialog(this, "Pasajero añadido al vuelo", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-            // Refrescar tabla de vuelos
-            //refreshAllFlightsButtonActionPerformed(null);
+            // refreshAllFlightsButtonActionPerformed(null); // ← Descomenta si querés refrescar la tabla
         } else {
             JOptionPane.showMessageDialog(this, "Error al añadir pasajero al vuelo. Verifica que el pasajero y vuelo existan.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -1787,8 +1780,8 @@ public class AirportFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_DelayFligthButtonActionPerformed
 
     private void UpdateUserFlights_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateUserFlights_buttonActionPerformed
-    PassengerTableController controller = new PassengerTableController();
-    controller.viewUserFlight(PassengerFlightTable, userSelect);
+        PassengerTableController controller = new PassengerTableController();
+        controller.viewUserFlight(PassengerFlightTable, userSelect);
     }//GEN-LAST:event_UpdateUserFlights_buttonActionPerformed
 
     private void refreshPassengerTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshPassengerTableActionPerformed

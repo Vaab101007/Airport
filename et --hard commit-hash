@@ -1,0 +1,133 @@
+[33mcommit 48a88aa23a08cfa14502c4c229c7fbc8c8eaccda[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Sat May 24 12:31:11 2025 -0500
+
+    Added viewUserFlight, corrected register flight and relation plane+flight
+
+[33mcommit ca794fdd68a7b8694ebc81b536d0b7aa3873a98d[m
+Author: Valerie <avangulo@uninorte.edu.co>
+Date:   Sat May 24 04:00:14 2025 -0500
+
+    Show All Flights
+
+[33mcommit b46c00050e85eec22f76fba279207d70757ff74f[m
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Sat May 24 00:34:48 2025 -0500
+
+    added Utils (JsonLoader & CombDataFiller) + added airportStorage + modification in storages
+
+[33mcommit c72eb6a9118dfad9cccda2370cd48cc580591437[m
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Fri May 23 21:35:15 2025 -0500
+
+    Added FlightTableController & added data package
+
+[33mcommit 1993fbc79537a0bc789fc967af73760454097295[m
+Author: Valerie <avangulo@uninorte.edu.co>
+Date:   Fri May 23 16:12:59 2025 -0500
+
+    Added Location and Passenger Tables
+
+[33mcommit 22944f73e6bea367b67e4916e1f5c813e59d21ca[m
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Thu May 22 21:56:28 2025 -0500
+
+    Modified CreateFlight button and show list
+
+[33mcommit 366921417a67a8386ef8fc46abf6491841f3f39e[m
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Thu May 22 19:36:41 2025 -0500
+
+    Added FlightController & modified View
+
+[33mcommit 06a68b634d09073cc96abc90e3ad00ec73d60a46[m
+Merge: 5aba043 374fce6
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Thu May 22 15:06:06 2025 -0500
+
+    Merge branch 'main' of https://github.com/Vaab101007/Airport
+
+[33mcommit 374fce623bb67b7548e36c623d3423664f4c6e8c[m
+Author: Valerie <avangulo@uninorte.edu.co>
+Date:   Thu May 22 11:45:47 2025 -0500
+
+    Update Button
+
+[33mcommit 5aba0430e814952dcc70808a15eba7ec72d042b2[m
+Merge: 57984ae 2a3300e
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Thu May 22 11:12:24 2025 -0500
+
+    Merge branch 'main' of https://github.com/Vaab101007/Airport
+
+[33mcommit 2a3300e2d5d7b6f2540b84a814ee384736d1121a[m
+Author: Valerie <avangulo@uninorte.edu.co>
+Date:   Thu May 22 01:08:10 2025 -0500
+
+    Plane Controller Correction
+
+[33mcommit bdc364e040b259a573033bdfb8a9312857be6a97[m
+Author: Valerie <avangulo@uninorte.edu.co>
+Date:   Thu May 22 00:11:27 2025 -0500
+
+    Passenger Completed
+
+[33mcommit 57984ae08469aa4d3bb0aa7895d84ecd17142bbf[m
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Wed May 21 13:28:55 2025 -0500
+
+    PAdded PlaneParser & PlaneValidator
+
+[33mcommit d0bb9400126d0feb764bbe0c3a98f7fc7f4a1572[m
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Wed May 21 13:03:23 2025 -0500
+
+    Correction PlaneController
+
+[33mcommit fb326244a7ae79094877bf81eedad75cd0a31380[m
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Wed May 21 12:17:57 2025 -0500
+
+    Added PlaneController & added Plane view
+
+[33mcommit bff872c0af6cfcf7f17d9a6485dfa0b2371daadb[m
+Author: Valerie <avangulo@uninorte.edu.co>
+Date:   Wed May 21 03:43:04 2025 -0500
+
+    Passenger Controller Modified
+
+[33mcommit 29acd70c6f28838918a430133fb429f8a26921c8[m
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Tue May 20 18:34:18 2025 -0500
+
+    Corecction
+
+[33mcommit e8d51e778d33d7104efd13093d0904e4ce22787f[m
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Tue May 20 10:39:17 2025 -0500
+
+    Added Plane Controller & Modified Passenger Storage
+
+[33mcommit 37c784b649547af839af6d65479089deee60c69e[m
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Mon May 19 22:06:27 2025 -0500
+
+    Added Controller Passenger & added Plane Model
+
+[33mcommit 4448c3633d48236b72c73b8e542551a19d070603[m
+Author: Valerie <avangulo@uninorte.edu.co>
+Date:   Mon May 19 20:02:59 2025 -0500
+
+    Passenger Model
+
+[33mcommit 3b8ad4f33d1588eba3eec8fd0dee6b1dd451cd4e[m
+Author: isi-25 <idpacheco@uninorte.edu.co>
+Date:   Mon May 19 17:45:54 2025 -0500
+
+    added folders
+
+[33mcommit 61fcb23427f62fc6966d2863140452e5c1c18688[m
+Author: Valerie <avangulo@uninorte.edu.co>
+Date:   Mon May 19 16:37:45 2025 -0500
+
+    Primer commit
