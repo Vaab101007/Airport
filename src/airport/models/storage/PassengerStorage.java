@@ -33,6 +33,7 @@ public class PassengerStorage extends Storage {
         Passenger p = (Passenger) object;
         if (!passengers.contains(p)) {
             passengers.add(p);
+            notifyObservers(); 
         }
     }
 

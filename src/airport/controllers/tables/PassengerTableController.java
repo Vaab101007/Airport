@@ -61,22 +61,43 @@ public class PassengerTableController {
      
      
     public void viewUserFlight(JTable table, JComboBox<String> comboBox) {
-   String selectedItem = (String) comboBox.getSelectedItem();
-    if (selectedItem == null || selectedItem.isEmpty()) return;
+        
+    String selectedItem = (String) comboBox.getSelectedItem();
 
-    String selectedPassengerId = selectedItem.split(" ")[0]; // o solo selectedItem si es solo el ID
+        // Validar que el ítem no sea nulo, vacío o "Select"
+        if (selectedItem == null || selectedItem.isBlank() || selectedItem.equals("Select")) {
+            // No hay pasajero válido seleccionado, limpiar tabla y salir
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            return;
+        }
 
-    DefaultTableModel model = (DefaultTableModel) table.getModel();
-    model.setRowCount(0);  // limpiar filas existentes
+        // Extraer el posible ID (asumiendo que el formato es "ID Nombre Apellido")
+        String selectedPassengerId = selectedItem.split(" ")[0];
 
-    List<Flight> flights = FlightStorage.getInstance().findByPassengerId(Long.parseLong(selectedPassengerId));
+        // Validar que el ID contenga solo dígitos
+        if (!selectedPassengerId.matches("\\d+")) {
+            // ID inválido, limpiar tabla y salir
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            return;
+        }
 
-    for (Flight f : flights) {
-        model.addRow(new Object[]{
-            f.getId(),
-            f.getDepartureDate(),
-            f.calculateArrivalDate()
-        });
+        long passengerId = Long.parseLong(selectedPassengerId);
+
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);  // Limpiar filas existentes
+
+        List<Flight> flights = FlightStorage.getInstance().findByPassengerId(passengerId);
+
+        for (Flight f : flights) {
+            model.addRow(new Object[]{
+                f.getId(),
+                f.getDepartureDate(),
+                f.calculateArrivalDate()
+            });
+        }
     }
-    }
+    
+    
 }

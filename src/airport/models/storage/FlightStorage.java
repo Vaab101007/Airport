@@ -35,6 +35,7 @@ public class FlightStorage extends Storage {
         Flight flight = (Flight) object;
         if (!existsById(flight.getId())) {
             flights.add(flight);
+            notifyObservers(); 
         }
     }
 
@@ -71,6 +72,7 @@ public class FlightStorage extends Storage {
             return false;
         }
         f.addPassenger(p);
+        notifyObservers(); 
         return true;
     }
 
@@ -103,4 +105,7 @@ public class FlightStorage extends Storage {
         return result;
     }
 
+
+    
+    
 }

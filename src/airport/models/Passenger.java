@@ -36,9 +36,10 @@ public class Passenger implements Prototype<Passenger>, HasFlights  {
         this.flights = new ArrayList<>();
     }
 
-//    public void addFlight(Flight flight) { //REVISAR!!!
-//        this.flights.add(flight);
-//    }
+    @Override
+    public void addFlight(Flight flight) {
+        flights.add(flight);
+    }
     
     public long getId() {
         return id;
@@ -97,7 +98,6 @@ public class Passenger implements Prototype<Passenger>, HasFlights  {
     }    
 
     
-    // NUEVO!!!
     @Override
     public Passenger clone() {
         Passenger copy = new Passenger(id, firstname, lastname, birthDate, countryPhoneCode, phone, country);
@@ -105,10 +105,7 @@ public class Passenger implements Prototype<Passenger>, HasFlights  {
         return copy;
     }
     
-    @Override
-    public void addFlight(Flight flight) {
-        flights.add(flight);
-    }
+
 
     
 }

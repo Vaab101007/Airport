@@ -33,6 +33,7 @@ public class LocationStorage extends Storage {
         Location l = (Location) object;
         if (!locations.contains(l)) {
             locations.add(l);
+             notifyObservers(); 
         }
     }
 
@@ -72,5 +73,8 @@ public class LocationStorage extends Storage {
 
     return sortedList;
 }
+    
 
+    
+    
 }

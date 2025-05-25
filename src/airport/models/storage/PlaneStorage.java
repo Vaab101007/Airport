@@ -35,6 +35,7 @@ public class PlaneStorage extends Storage{
         Plane p = (Plane) object;
         if (!planes.contains(p)) {
             planes.add(p);
+            notifyObservers(); 
         }
     }
 

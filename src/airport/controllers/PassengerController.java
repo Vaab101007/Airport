@@ -82,7 +82,7 @@ public class PassengerController {
         return new Response<>(Status.OK, "Pasajero actualizado con éxito", original.clone());
     }
     
-        // 📌 Devolver todos los pasajeros ordenados por ID
+        // Devolver todos los pasajeros ordenados por ID
     public Response<ArrayList<Passenger>> getAllPassengers() {
         ArrayList<Passenger> sorted = new ArrayList<>(storage.getPassengers());
         sorted.sort(Comparator.comparingLong(Passenger::getId));

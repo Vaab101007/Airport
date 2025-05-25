@@ -19,7 +19,9 @@ import airport.models.Location;
 import airport.models.Plane;
 import airport.models.Flight;
 import airport.models.Passenger;
+import airport.models.storage.FlightStorage;
 import airport.models.storage.LocationStorage;
+import airport.models.storage.PassengerStorage;
 import airport.models.storage.PlaneStorage;
 import airport.utils.ComboDataFiller;
 import airport.utils.JsonLoader;
@@ -38,10 +40,12 @@ import javax.swing.table.DefaultTableModel;
 public class AirportFrame extends javax.swing.JFrame {
 
     private PassengerController passengerController = new PassengerController();
+    private final PassengerTableController passengerTableController = new PassengerTableController();
     private FlightController flightController = new FlightController();
     private PlaneController planeController = new PlaneController();
     private LocationController locationController = new LocationController();
     private FlightTableController flightTablecontroller = new FlightTableController();
+    
 
     /**
      * Creates new form AirportFrame
@@ -61,6 +65,9 @@ public class AirportFrame extends javax.swing.JFrame {
 //        this.flightSto = AirportStorage.getInstance().getFlightStorage();
 //        this.planeSto = AirportStorage.getInstance().getPlaneStorage();
 //        this.locationSto= AirportStorage.getInstance().getLocationStorage();
+        
+
+
         this.passengers = new ArrayList<>();
         this.planes = new ArrayList<>();
         this.locations = new ArrayList<>();
@@ -89,6 +96,26 @@ public class AirportFrame extends javax.swing.JFrame {
         ComboDataFiller.loadFlights(txtFlights_addPassengerToFlight);
         ComboDataFiller.loadFlights(txtFlights_delayFlights);
         ScaleLoc_RegFlight.addItem("None");
+        
+        
+        FlightStorage.getInstance().addObserver(() -> updateFlightTable());
+        PassengerStorage.getInstance().addObserver(() -> updatePassengerTable());
+        PlaneStorage.getInstance().addObserver(() -> updatePlaneTable());
+        LocationStorage.getInstance().addObserver(() -> updateLocationTable());
+
+       PassengerStorage.getInstance().addObserver(() -> {
+       passengerTableController.viewUserFlight(PassengerFlightTable, userSelect);
+       });
+           
+        userSelect.addActionListener(e -> {
+        passengerTableController.viewUserFlight(PassengerFlightTable, userSelect);
+        });
+
+
+
+    
+
+
     }
 
     private String leftPad(String value) {
@@ -137,6 +164,42 @@ public class AirportFrame extends javax.swing.JFrame {
             jComboBox8.addItem("" + i);
         }
     }
+    
+    private void updateFlightTable() {
+    Response<List<String[]>> response = flightTablecontroller.refreshTableData();
+
+    if (response.getStatus() >= 400) {
+        // Opcional: puedes mostrar un mensaje si quieres
+        return;
+    }
+    List<String[]> flightData = response.getData();
+    DefaultTableModel model = (DefaultTableModel) showAllFlightsTable.getModel();
+    model.setRowCount(0); // Limpia la tabla
+
+    for (String[] row : flightData) {
+        model.addRow(row);
+    }
+}
+    private void updatePassengerTable() {
+    DefaultTableModel model = (DefaultTableModel) passengersTable.getModel();
+    PassengerTableController.updatePassengerTable(model);
+}
+
+    private void updatePlaneTable() {
+    DefaultTableModel model = (DefaultTableModel) planesTable.getModel();
+    PlaneTableController.updatePlaneTable(model);
+}
+
+    private void updateLocationTable() {
+    DefaultTableModel model = (DefaultTableModel) locationsTable.getModel(); // Cambia si tu tabla tiene otro nombre
+    LocationTableController.updateLocationTable(model);
+}
+
+
+    
+
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1452,8 +1515,8 @@ public class AirportFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-
+    
+    
     private void panelRound2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelRound2MousePressed
         x = evt.getX();
         y = evt.getY();

@@ -80,6 +80,9 @@ public class FlightController {
             return new Response<>(Status.NOT_FOUND, "Vuelo no encontrado", null);
         }
         flight.addPassenger(passenger);
+        passenger.addFlight(flight); 
+        PassengerStorage.getInstance().notifyObservers(); 
+        
         return new Response<>(Status.OK, "Pasajero añadido exitosamente", flight.clone());
     }
 
@@ -102,17 +105,7 @@ public class FlightController {
     if (flight == null) {
         return new Response<>(Status.NOT_FOUND, "Vuelo no encontrado", null);
     }
-
-    // ➕ Mostrar hora antes del retraso
-    System.out.println("Hora original de salida: " + flight.getDepartureDate());
-
-    // 3. Aplicar el retraso
     flight.delay(hours, minutes);
-
-    // ➕ Mostrar hora después del retraso
-    System.out.println("Hora nueva de salida: " + flight.getDepartureDate());
-
-    // 4. El objeto ya está modificado en memoria → el storage está actualizado automáticamente
     return new Response<>(Status.OK, "Vuelo retrasado exitosamente", flight.clone());
     }
 
@@ -134,6 +127,7 @@ public class FlightController {
 
         f.addPassenger(p);
         p.addFlight(f);
+        PassengerStorage.getInstance().notifyObservers();
         return true;
     }
 

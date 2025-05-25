@@ -4,11 +4,14 @@
  */
 package airport.models.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author isisp
  */
-public class AirportStorage {
+public class AirportStorage extends Storage {
     private static AirportStorage instance;
     
     /*Devuelve una única instancia de AirportStorage
@@ -51,6 +54,23 @@ public class AirportStorage {
         return locationSto;
     }
     
+    private List<Runnable> observers = new ArrayList<>();
+    
+    public void addObserver(Runnable observer) {
+        observers.add(observer);
+    }
+
+    public void notifyObservers() {
+        for (Runnable observer : observers) {
+            observer.run();
+        }
+    }
+
+    @Override
+    public void addItem(Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 
 
 }
