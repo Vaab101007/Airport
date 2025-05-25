@@ -15,16 +15,18 @@ import java.time.format.DateTimeParseException;
  * @author isisp
  */
 public class FlightParser {
+
     public static Response<Flight> parse(String id, Plane plane, Location dep, Location scale, Location arr, String departureDateStr, String hArrStr, String mArrStr, String hScaleStr, String mScaleStr) {
         try {
+
             LocalDateTime departureDate = LocalDateTime.parse(departureDateStr);
             int hArr = Integer.parseInt(hArrStr);
             int mArr = Integer.parseInt(mArrStr);
-            int hScale = scale == null ? 0 : Integer.parseInt(hScaleStr);
-            int mScale = scale == null ? 0 : Integer.parseInt(mScaleStr);
+            int hScale = (scale == null) ? 0 : Integer.parseInt(hScaleStr);
+            int mScale = (scale == null) ? 0 : Integer.parseInt(mScaleStr);
 
             Flight flight;
-            
+
             if (scale == null) {
                 flight = new Flight(id, plane, dep, arr, departureDate, hArr, mArr);
             } else {
@@ -36,5 +38,5 @@ public class FlightParser {
         } catch (NumberFormatException | DateTimeParseException e) {
             return new Response<>(Status.BAD_REQUEST, "Error en el formato de datos: " + e.getMessage(), null);
         }
-    } 
+    }
 }

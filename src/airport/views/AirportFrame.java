@@ -88,8 +88,9 @@ public class AirportFrame extends javax.swing.JFrame {
         ComboDataFiller.LoadLocations(ScaleLoc_RegFlight);
         ComboDataFiller.loadFlights(txtFlights_addPassengerToFlight);
         ComboDataFiller.loadFlights(txtFlights_delayFlights);
+        ScaleLoc_RegFlight.addItem("None");
     }
-    
+
     private String leftPad(String value) {
         return value.length() == 1 ? "0" + value : value;
     }
@@ -1593,78 +1594,91 @@ public class AirportFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_createLocationButtonActionPerformed
 
     private void CreateFlightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateFlightButtonActionPerformed
-   String id = txtPassengerId.getText().trim();
-    String planeId = Plane_RegFlight.getSelectedItem().toString().trim();
-    String departureLocationId = DepartureLoc_RegFlight.getSelectedItem().toString().trim();
-    String arrivalLocationId = ArrivalLoc_RegFlight.getSelectedItem().toString().trim();
-    String scaleLocationId = ScaleLoc_RegFlight.getSelectedItem().toString().trim();
+        String id = txtPassengerId.getText().trim();
+        String planeId = Plane_RegFlight.getSelectedItem().toString().trim();
+        String departureLocationId = DepartureLoc_RegFlight.getSelectedItem().toString().trim();
+        String arrivalLocationId = ArrivalLoc_RegFlight.getSelectedItem().toString().trim();
+        String scaleLocationId = ScaleLoc_RegFlight.getSelectedItem().toString().trim();
 
-    // Fecha/hora sin parsear, solo formateada
-    String year = textYearDepartureDate_RegFlight.getText().trim();
-    String month = textMonthDepartureDate_RegFlight.getSelectedItem().toString().trim();
-    String day = textDayDepartureDate_RegFlight.getSelectedItem().toString().trim();
-    String hour = textHourDepartureDate_RegFlight.getSelectedItem().toString().trim();
-    String minutes = DAY2.getSelectedItem().toString().trim();
+        // Fecha/hora sin parsear, solo formateada
+        String year = textYearDepartureDate_RegFlight.getText().trim();
+        String month = textMonthDepartureDate_RegFlight.getSelectedItem().toString().trim();
+        String day = textDayDepartureDate_RegFlight.getSelectedItem().toString().trim();
+        String hour = textHourDepartureDate_RegFlight.getSelectedItem().toString().trim();
+        String minutes = DAY2.getSelectedItem().toString().trim();
 
-    if (year.isEmpty() || month.isEmpty() || day.isEmpty() || hour.isEmpty() || minutes.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Complete todos los campos de fecha y hora.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Formato ISO8601: yyyy-MM-ddTHH:mm
-    String departureDateStr = year + "-" + leftPad(month) + "-" + leftPad(day) + "T" + leftPad(hour) + ":" + leftPad(minutes);
-
-    String hoursArrStr = txtHourDuration_RegFlight.getSelectedItem().toString().trim();
-    String minutesArrStr = txtMinsDuration_RegFlight.getSelectedItem().toString().trim();
-    String hoursScaleStr = txtHourScaleDuration_RegFlight.getSelectedItem().toString().trim();
-    String minutesScaleStr = txtMinsScaleDuration_RegFlight.getSelectedItem().toString().trim();
-
-    Plane plane = null;
-    for (Plane p : this.planes) {
-        if (planeId.equals(p.getId())) {
-            plane = p;
-            break;
+        if (year.isEmpty() || month.isEmpty() || day.isEmpty() || hour.isEmpty() || minutes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos de fecha y hora.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-    }
 
-    Location departure = null, arrival = null, scale = null;
-    for (Location loc : this.locations) {
-        if (loc.getAirportId().equals(departureLocationId)) {
-            departure = loc;
+        // Formato ISO8601: yyyy-MM-ddTHH:mm
+        String departureDateStr = year + "-" + leftPad(month) + "-" + leftPad(day) + "T" + leftPad(hour) + ":" + leftPad(minutes);
+
+        String hoursArrStr = txtHourDuration_RegFlight.getSelectedItem().toString().trim();
+        String minutesArrStr = txtMinsDuration_RegFlight.getSelectedItem().toString().trim();
+        String hoursScaleStr = txtHourScaleDuration_RegFlight.getSelectedItem().toString().trim();
+        String minutesScaleStr = txtMinsScaleDuration_RegFlight.getSelectedItem().toString().trim();
+
+        Plane plane = null;
+        for (Plane p : this.planes) {
+            if (planeId.equals(p.getId())) {
+                plane = p;
+                break;
+            }
         }
-        if (loc.getAirportId().equals(arrivalLocationId)) {
-            arrival = loc;
+
+        Location departure = null, arrival = null, scale = null;
+
+        for (Location loc : this.locations) {
+            if (loc.getAirportId().equals(departureLocationId)) {
+                departure = loc;
+            }
+            if (loc.getAirportId().equals(arrivalLocationId)) {
+                arrival = loc;
+            }
+            if (loc.getAirportId().equals(scaleLocationId)) {
+                scale = loc;
+            }
         }
-        if (loc.getAirportId().equals(scaleLocationId)) {
-            scale = loc;
+
+// 🔥 Validación para que "None" no se interprete como escala válida
+// 🔥 Validación para que "None" no se interprete como escala válida
+        if ("None".equals(scaleLocationId)) {
+            scale = null;
+
+            // Validar que la duración de escala sea 0 si no hay escala
+            if (!hoursScaleStr.equals("0") || !minutesScaleStr.equals("0")) {
+                JOptionPane.showMessageDialog(this,
+                        "Si no hay escala seleccionada, la duración de la escala debe ser 0:00.",
+                        "Error de validación",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
         }
-    }
 
-    if (scale != null && "0".equals(scale.getAirportId())) {
-        scale = null;
-    }
+        Response<Flight> response = flightController.createFlight(
+                id, plane, departure, scale, arrival,
+                departureDateStr,
+                hoursArrStr, minutesArrStr,
+                hoursScaleStr, minutesScaleStr
+        );
 
-    Response<Flight> response = flightController.createFlight(
-            id, plane, departure, scale, arrival,
-            departureDateStr,
-            hoursArrStr, minutesArrStr,
-            hoursScaleStr, minutesScaleStr
-    );
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Advertencia " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            Flight newFlight = response.getData();
+            plane.addFlight(newFlight);
 
-    if (response.getStatus() >= 500) {
-        JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
-    } else if (response.getStatus() >= 400) {
-        JOptionPane.showMessageDialog(this, response.getMessage(), "Advertencia " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
-    } else {
-        Flight newFlight = response.getData();
-        plane.addFlight(newFlight);
+            DefaultTableModel model = (DefaultTableModel) planesTable.getModel();
+            PlaneTableController.updatePlaneTable(model);
 
-        DefaultTableModel model = (DefaultTableModel) planesTable.getModel();
-        PlaneTableController.updatePlaneTable(model);
-
-        JOptionPane.showMessageDialog(this, response.getMessage(), "Éxito " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
-        txtFlights_addPassengerToFlight.addItem(id);
-    }
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Éxito " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
+            txtFlights_addPassengerToFlight.addItem(id);
+        }
     }//GEN-LAST:event_CreateFlightButtonActionPerformed
 
     private void updatePassengerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatePassengerButtonActionPerformed
