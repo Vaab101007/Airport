@@ -89,6 +89,10 @@ public class AirportFrame extends javax.swing.JFrame {
         ComboDataFiller.loadFlights(txtFlights_addPassengerToFlight);
         ComboDataFiller.loadFlights(txtFlights_delayFlights);
     }
+    
+    private String leftPad(String value) {
+        return value.length() == 1 ? "0" + value : value;
+    }
 
     private void blockPanels() {
         //9, 11
@@ -217,7 +221,7 @@ public class AirportFrame extends javax.swing.JFrame {
         txtUpdCountry = new javax.swing.JTextField();
         updatePassengerButton = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
-        jTextField28 = new javax.swing.JTextField();
+        UserID_AddToFlight = new javax.swing.JTextField();
         jLabel44 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
         txtFlights_addPassengerToFlight = new javax.swing.JComboBox<>();
@@ -750,8 +754,8 @@ public class AirportFrame extends javax.swing.JFrame {
 
         ShowPassengers.addTab("Update info", jPanel5);
 
-        jTextField28.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        jTextField28.setEnabled(false);
+        UserID_AddToFlight.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        UserID_AddToFlight.setEnabled(false);
 
         jLabel44.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel44.setText("ID:");
@@ -782,7 +786,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGap(79, 79, 79)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtFlights_addPassengerToFlight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField28, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(UserID_AddToFlight, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(860, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -797,7 +801,7 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel44))
-                    .addComponent(jTextField28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(UserID_AddToFlight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel45)
@@ -1589,81 +1593,78 @@ public class AirportFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_createLocationButtonActionPerformed
 
     private void CreateFlightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateFlightButtonActionPerformed
-        String id = txtPassengerId.getText().trim();
-        String planeId = Plane_RegFlight.getSelectedItem().toString().trim();
-        String departureLocationId = DepartureLoc_RegFlight.getSelectedItem().toString().trim();
-        String arrivalLocationId = ArrivalLoc_RegFlight.getSelectedItem().toString().trim();
-        String scaleLocationId = ScaleLoc_RegFlight.getSelectedItem().toString().trim();
+   String id = txtPassengerId.getText().trim();
+    String planeId = Plane_RegFlight.getSelectedItem().toString().trim();
+    String departureLocationId = DepartureLoc_RegFlight.getSelectedItem().toString().trim();
+    String arrivalLocationId = ArrivalLoc_RegFlight.getSelectedItem().toString().trim();
+    String scaleLocationId = ScaleLoc_RegFlight.getSelectedItem().toString().trim();
 
-        String year = textYearDepartureDate_RegFlight.getText().trim();
-        String month = textMonthDepartureDate_RegFlight.getSelectedItem().toString().trim();
-        String day = textDayDepartureDate_RegFlight.getSelectedItem().toString().trim();
-        String hour = textHourDepartureDate_RegFlight.getSelectedItem().toString().trim();
-        String minutes = DAY2.getSelectedItem().toString().trim();
+    // Fecha/hora sin parsear, solo formateada
+    String year = textYearDepartureDate_RegFlight.getText().trim();
+    String month = textMonthDepartureDate_RegFlight.getSelectedItem().toString().trim();
+    String day = textDayDepartureDate_RegFlight.getSelectedItem().toString().trim();
+    String hour = textHourDepartureDate_RegFlight.getSelectedItem().toString().trim();
+    String minutes = DAY2.getSelectedItem().toString().trim();
 
-        // Validar campos de fecha y hora
-        if (year.isEmpty() || month.isEmpty() || day.isEmpty() || hour.isEmpty() || minutes.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Complete todos los campos de fecha y hora.", "Error de validación", JOptionPane.ERROR_MESSAGE);
-            return;
+    if (year.isEmpty() || month.isEmpty() || day.isEmpty() || hour.isEmpty() || minutes.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Complete todos los campos de fecha y hora.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Formato ISO8601: yyyy-MM-ddTHH:mm
+    String departureDateStr = year + "-" + leftPad(month) + "-" + leftPad(day) + "T" + leftPad(hour) + ":" + leftPad(minutes);
+
+    String hoursArrStr = txtHourDuration_RegFlight.getSelectedItem().toString().trim();
+    String minutesArrStr = txtMinsDuration_RegFlight.getSelectedItem().toString().trim();
+    String hoursScaleStr = txtHourScaleDuration_RegFlight.getSelectedItem().toString().trim();
+    String minutesScaleStr = txtMinsScaleDuration_RegFlight.getSelectedItem().toString().trim();
+
+    Plane plane = null;
+    for (Plane p : this.planes) {
+        if (planeId.equals(p.getId())) {
+            plane = p;
+            break;
         }
+    }
 
-        String departureDateStr = String.format("%04d-%02d-%02dT%02d:%02d",
-                Integer.parseInt(year),
-                Integer.parseInt(month),
-                Integer.parseInt(day),
-                Integer.parseInt(hour),
-                Integer.parseInt(minutes));
-
-        String hoursArrStr = txtHourDuration_RegFlight.getSelectedItem().toString().trim();
-        String minutesArrStr = txtMinsDuration_RegFlight.getSelectedItem().toString().trim();
-        String hoursScaleStr = txtHourScaleDuration_RegFlight.getSelectedItem().toString().trim();
-        String minutesScaleStr = txtMinsScaleDuration_RegFlight.getSelectedItem().toString().trim();
-
-        Plane plane = null;
-        for (Plane p : this.planes) {
-            if (planeId.equals(p.getId())) {
-                plane = p;
-                break; // rompe loop para eficiencia
-            }
+    Location departure = null, arrival = null, scale = null;
+    for (Location loc : this.locations) {
+        if (loc.getAirportId().equals(departureLocationId)) {
+            departure = loc;
         }
-
-        Location departure = null, arrival = null, scale = null;
-        for (Location loc : this.locations) {
-            if (loc.getAirportId().equals(departureLocationId)) {
-                departure = loc;
-            }
-            if (loc.getAirportId().equals(arrivalLocationId)) {
-                arrival = loc;
-            }
-            if (loc.getAirportId().equals(scaleLocationId)) {
-                scale = loc;
-            }
+        if (loc.getAirportId().equals(arrivalLocationId)) {
+            arrival = loc;
         }
-
-        Response<Flight> response = flightController.createFlight(
-                id, plane, departure, scale, arrival,
-                departureDateStr,
-                hoursArrStr, minutesArrStr,
-                hoursScaleStr, minutesScaleStr
-        );
-
-        if (response.getStatus() >= 500) {
-            JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
-        } else if (response.getStatus() >= 400) {
-            JOptionPane.showMessageDialog(this, response.getMessage(), "Advertencia " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
-        } else {
-
-            //✅ 5. Si fue exitoso, agregar el vuelo al avión y refrescar la tabla
-            Flight newFlight = response.getData();
-            plane.addFlight(newFlight); // <-- asegúrate que exista este método en tu clase Plane
-
-            // 🔄 actualizar tabla de aviones
-            DefaultTableModel model = (DefaultTableModel) planesTable.getModel(); // usa el nombre real de tu tabla aquí
-            PlaneTableController.updatePlaneTable(model);
-
-            JOptionPane.showMessageDialog(this, response.getMessage(), "Éxito " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
-            txtFlights_addPassengerToFlight.addItem(id); // actualiza selector de vuelos
+        if (loc.getAirportId().equals(scaleLocationId)) {
+            scale = loc;
         }
+    }
+
+    if (scale != null && "0".equals(scale.getAirportId())) {
+        scale = null;
+    }
+
+    Response<Flight> response = flightController.createFlight(
+            id, plane, departure, scale, arrival,
+            departureDateStr,
+            hoursArrStr, minutesArrStr,
+            hoursScaleStr, minutesScaleStr
+    );
+
+    if (response.getStatus() >= 500) {
+        JOptionPane.showMessageDialog(this, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+    } else if (response.getStatus() >= 400) {
+        JOptionPane.showMessageDialog(this, response.getMessage(), "Advertencia " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+    } else {
+        Flight newFlight = response.getData();
+        plane.addFlight(newFlight);
+
+        DefaultTableModel model = (DefaultTableModel) planesTable.getModel();
+        PlaneTableController.updatePlaneTable(model);
+
+        JOptionPane.showMessageDialog(this, response.getMessage(), "Éxito " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
+        txtFlights_addPassengerToFlight.addItem(id);
+    }
     }//GEN-LAST:event_CreateFlightButtonActionPerformed
 
     private void updatePassengerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatePassengerButtonActionPerformed
@@ -1724,7 +1725,7 @@ public class AirportFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         // Obtener el texto del campo de ID del pasajero
-        String idText = jTextField28.getText().trim();
+        String idText = UserID_AddToFlight.getText().trim();
 
         // Validar si está vacío
         if (idText.isEmpty()) {
@@ -1831,10 +1832,10 @@ public class AirportFrame extends javax.swing.JFrame {
             String id = userSelect.getSelectedItem().toString();
             if (!id.equals(userSelect.getItemAt(0))) {
                 txtUpdID.setText(id);
-                jTextField28.setText(id);
+                UserID_AddToFlight.setText(id);
             } else {
                 txtUpdID.setText("");
-                jTextField28.setText("");
+                UserID_AddToFlight.setText("");
             }
         } catch (Exception e) {
         }
@@ -1882,6 +1883,7 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ScaleLoc_RegFlight;
     private javax.swing.JTabbedPane ShowPassengers;
     private javax.swing.JButton UpdateUserFlights_button;
+    private javax.swing.JTextField UserID_AddToFlight;
     private javax.swing.JButton addFlightsButton;
     private javax.swing.JRadioButton administrator;
     private javax.swing.JComboBox<String> boxPassengerRegDay;
@@ -1956,7 +1958,6 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextField jTextField28;
     private javax.swing.JTable locationsTable;
     private airport.views.PanelRound panelRound1;
     private airport.views.PanelRound panelRound2;

@@ -4,6 +4,8 @@
  */
 package airport.models;
 
+import airport.models.utils.Prototype;
+
 /**
  *
  * @author edangulo

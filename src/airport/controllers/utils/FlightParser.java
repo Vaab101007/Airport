@@ -24,6 +24,7 @@ public class FlightParser {
             int mScale = scale == null ? 0 : Integer.parseInt(mScaleStr);
 
             Flight flight;
+            
             if (scale == null) {
                 flight = new Flight(id, plane, dep, arr, departureDate, hArr, mArr);
             } else {

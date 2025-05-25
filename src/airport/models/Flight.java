@@ -6,7 +6,7 @@ package airport.models;
 
 import airport.models.Location;
 import airport.models.Plane;
-import airport.models.Prototype;
+import airport.models.utils.Prototype;
 import airport.models.storage.FlightStorage;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
