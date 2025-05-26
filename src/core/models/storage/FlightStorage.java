@@ -6,6 +6,7 @@ package core.models.storage;
 
 import core.models.Flight;
 import core.models.Passenger;
+import core.models.Plane;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -36,6 +37,10 @@ public class FlightStorage extends Storage {
         if (!existsById(flight.getId())) {
             flights.add(flight);
             notifyObservers(); 
+        Plane plane = flight.getPlane();
+        if (plane != null) {
+            plane.addFlight(flight);
+        }
         }
     }
 
@@ -104,8 +109,4 @@ public class FlightStorage extends Storage {
         }
         return result;
     }
-
-
-    
-    
 }

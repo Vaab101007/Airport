@@ -81,6 +81,7 @@ public class FlightController {
         flight.addPassenger(passenger);
         passenger.addFlight(flight); 
         PassengerStorage.getInstance().notifyObservers(); 
+        FlightStorage.getInstance().notifyObservers(); 
         
         return new Response<>(Status.OK, "Pasajero añadido exitosamente", flight.clone());
     }

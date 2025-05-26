@@ -159,12 +159,15 @@ public class AirportFrame extends javax.swing.JFrame {
     }
     List<String[]> flightData = response.getData();
     DefaultTableModel model = (DefaultTableModel) showAllFlightsTable.getModel();
-    model.setRowCount(0); // Limpia la tabla
+   
+    model.setRowCount(0);
 
     for (String[] row : flightData) {
         model.addRow(row);
     }
 }
+
+
     private void updatePassengerTable() {
     DefaultTableModel model = (DefaultTableModel) passengersTable.getModel();
     PassengerTableController.updatePassengerTable(model);
@@ -1696,12 +1699,14 @@ public class AirportFrame extends javax.swing.JFrame {
         } else {
             Flight newFlight = response.getData();
             plane.addFlight(newFlight);
+            updatePlaneTable();
 
             DefaultTableModel model = (DefaultTableModel) planesTable.getModel();
             PlaneTableController.updatePlaneTable(model);
 
             JOptionPane.showMessageDialog(this, response.getMessage(), "Éxito " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
             txtFlights_addPassengerToFlight.addItem(id);
+            txtFlights_delayFlights.addItem(id);
         }
     }//GEN-LAST:event_CreateFlightButtonActionPerformed
 
@@ -1774,6 +1779,7 @@ public class AirportFrame extends javax.swing.JFrame {
 
         if (success) {
             JOptionPane.showMessageDialog(this, "Pasajero añadido al vuelo", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            updateFlightTable(); 
         } else {
             JOptionPane.showMessageDialog(this, "Error al añadir pasajero al vuelo. Verifica que el pasajero y vuelo existan.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -1793,6 +1799,7 @@ public class AirportFrame extends javax.swing.JFrame {
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(this, response.getMessage(), "Advertencia " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
+            updateFlightTable(); 
             JOptionPane.showMessageDialog(this, response.getMessage(), "Éxito " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_DelayFligthButtonActionPerformed
