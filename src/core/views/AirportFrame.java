@@ -1710,11 +1710,11 @@ public class AirportFrame extends javax.swing.JFrame {
         String firstname = txtUpdFirstName.getText().trim();
         String lastname = txtUpdLastName.getText().trim();
         String year = txtUpdYear.getText().trim();
-        String month = boxPassengerRegMonth.getSelectedItem().toString().trim();
-        String day = boxPassengerRegDay.getSelectedItem().toString().trim();
-        String phoneCode = txtUpdPhoneCode.getText();
-        String phone = txtUpdPhone.getText();
-        String country = txtUpdCountry.getText();
+        String month = MONTH5.getSelectedItem().toString().trim();
+        String day = DAY5.getSelectedItem().toString().trim();
+        String phoneCode = txtUpdPhoneCode.getText().trim();
+        String phone = txtUpdPhone.getText().trim();
+        String country = txtUpdCountry.getText().trim();
 
         String birthDate = year + month + day;
         // 2. Usar el parser para convertir los strings en un PassengerModel
@@ -1748,8 +1748,8 @@ public class AirportFrame extends javax.swing.JFrame {
             txtUpdPhoneCode.setText("");
             txtUpdPhone.setText("");
             txtUpdCountry.setText("");
-            boxPassengerRegMonth.setSelectedIndex(0);
-            boxPassengerRegDay.setSelectedIndex(0);
+            MONTH5.setSelectedIndex(0);
+            DAY5.setSelectedIndex(0);
         }
 
 

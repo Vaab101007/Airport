@@ -21,6 +21,14 @@ public class PassengerParser {
             String phoneCodeStr, String phoneStr, String country
     ) {
         try {
+
+            System.out.println("idStr: " + idStr);
+            System.out.println("yearStr: " + yearStr);
+            System.out.println("monthStr: " + monthStr);
+            System.out.println("dayStr: " + dayStr);
+            System.out.println("phoneCodeStr: " + phoneCodeStr);
+            System.out.println("phoneStr: " + phoneStr);
+
             long id = Long.parseLong(idStr);
             int year = Integer.parseInt(yearStr.trim());
             int month = Integer.parseInt(monthStr.trim());
