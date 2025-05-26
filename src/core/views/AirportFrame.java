@@ -122,7 +122,7 @@ public class AirportFrame extends javax.swing.JFrame {
         for (int i = 1; i < 13; i++) {
             boxPassengerRegMonth.addItem("" + i);
             textMonthDepartureDate_RegFlight.addItem("" + i);
-            MONTH5.addItem("" + i);
+            boxUpdMonth.addItem("" + i);
         }
     }
 
@@ -130,7 +130,7 @@ public class AirportFrame extends javax.swing.JFrame {
         for (int i = 1; i < 32; i++) {
             boxPassengerRegDay.addItem("" + i);
             textDayDepartureDate_RegFlight.addItem("" + i);
-            DAY5.addItem("" + i);
+            boxUpdDay.addItem("" + i);
         }
     }
 
@@ -145,7 +145,7 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void generateMinutes() {
         for (int i = 0; i < 60; i++) {
-            DAY2.addItem("" + i);
+            boxMinuteFlightReg.addItem("" + i);
             txtMinsDuration_RegFlight.addItem("" + i);
             txtMinsScaleDuration_RegFlight.addItem("" + i);
             jComboBox8.addItem("" + i);
@@ -266,7 +266,7 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel32 = new javax.swing.JLabel();
         textHourDepartureDate_RegFlight = new javax.swing.JComboBox<>();
         jLabel33 = new javax.swing.JLabel();
-        DAY2 = new javax.swing.JComboBox<>();
+        boxMinuteFlightReg = new javax.swing.JComboBox<>();
         txtHourDuration_RegFlight = new javax.swing.JComboBox<>();
         jLabel34 = new javax.swing.JLabel();
         txtMinsDuration_RegFlight = new javax.swing.JComboBox<>();
@@ -283,8 +283,8 @@ public class AirportFrame extends javax.swing.JFrame {
         txtUpdLastName = new javax.swing.JTextField();
         jLabel39 = new javax.swing.JLabel();
         txtUpdYear = new javax.swing.JTextField();
-        MONTH5 = new javax.swing.JComboBox<>();
-        DAY5 = new javax.swing.JComboBox<>();
+        boxUpdMonth = new javax.swing.JComboBox<>();
+        boxUpdDay = new javax.swing.JComboBox<>();
         txtUpdPhone = new javax.swing.JTextField();
         jLabel40 = new javax.swing.JLabel();
         txtUpdPhoneCode = new javax.swing.JTextField();
@@ -722,8 +722,8 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel33.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel33.setText("-");
 
-        DAY2.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        DAY2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minute" }));
+        boxMinuteFlightReg.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        boxMinuteFlightReg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minute" }));
 
         txtHourDuration_RegFlight.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         txtHourDuration_RegFlight.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hour" }));
@@ -810,7 +810,7 @@ public class AirportFrame extends javax.swing.JFrame {
                             .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(flightRegistrationPanelLayout.createSequentialGroup()
                                 .addGap(20, 20, 20)
-                                .addComponent(DAY2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(boxMinuteFlightReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(30, 30, 30))
                     .addGroup(flightRegistrationPanelLayout.createSequentialGroup()
                         .addGroup(flightRegistrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -854,7 +854,7 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addComponent(textHourDepartureDate_RegFlight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel32)
                     .addComponent(jLabel33)
-                    .addComponent(DAY2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boxMinuteFlightReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(flightRegistrationPanelLayout.createSequentialGroup()
                         .addGroup(flightRegistrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(flightRegistrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -915,11 +915,11 @@ public class AirportFrame extends javax.swing.JFrame {
 
         txtUpdYear.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
 
-        MONTH5.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        MONTH5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Month" }));
+        boxUpdMonth.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        boxUpdMonth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Month" }));
 
-        DAY5.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        DAY5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Day" }));
+        boxUpdDay.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        boxUpdDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Day" }));
 
         txtUpdPhone.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
 
@@ -973,9 +973,9 @@ public class AirportFrame extends javax.swing.JFrame {
                                 .addGap(55, 55, 55)
                                 .addComponent(txtUpdYear, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
-                                .addComponent(MONTH5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(boxUpdMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(34, 34, 34)
-                                .addComponent(DAY5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(boxUpdDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(updatePanelLayout.createSequentialGroup()
                                 .addComponent(jLabel42)
                                 .addGap(56, 56, 56)
@@ -1014,8 +1014,8 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGroup(updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel39)
                     .addComponent(txtUpdYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(MONTH5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DAY5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(boxUpdMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boxUpdDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(updatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel42)
@@ -1636,7 +1636,7 @@ public class AirportFrame extends javax.swing.JFrame {
         String month = textMonthDepartureDate_RegFlight.getSelectedItem().toString().trim();
         String day = textDayDepartureDate_RegFlight.getSelectedItem().toString().trim();
         String hour = textHourDepartureDate_RegFlight.getSelectedItem().toString().trim();
-        String minutes = DAY2.getSelectedItem().toString().trim();
+        String minutes = boxMinuteFlightReg.getSelectedItem().toString().trim();
 
         if (year.isEmpty() || month.isEmpty() || day.isEmpty() || hour.isEmpty() || minutes.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Complete todos los campos de fecha y hora.", "Error de validación", JOptionPane.ERROR_MESSAGE);
@@ -1710,8 +1710,8 @@ public class AirportFrame extends javax.swing.JFrame {
         String firstname = txtUpdFirstName.getText().trim();
         String lastname = txtUpdLastName.getText().trim();
         String year = txtUpdYear.getText().trim();
-        String month = MONTH5.getSelectedItem().toString().trim();
-        String day = DAY5.getSelectedItem().toString().trim();
+        String month = boxUpdMonth.getSelectedItem().toString().trim();
+        String day = boxUpdDay.getSelectedItem().toString().trim();
         String phoneCode = txtUpdPhoneCode.getText().trim();
         String phone = txtUpdPhone.getText().trim();
         String country = txtUpdCountry.getText().trim();
@@ -1748,8 +1748,8 @@ public class AirportFrame extends javax.swing.JFrame {
             txtUpdPhoneCode.setText("");
             txtUpdPhone.setText("");
             txtUpdCountry.setText("");
-            MONTH5.setSelectedIndex(0);
-            DAY5.setSelectedIndex(0);
+            boxUpdMonth.setSelectedIndex(0);
+            boxUpdDay.setSelectedIndex(0);
         }
 
 
@@ -1873,11 +1873,8 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ArrivalLoc_RegFlight;
     private javax.swing.JButton CreateFlightButton;
     private javax.swing.JButton CreatePlaneButton;
-    private javax.swing.JComboBox<String> DAY2;
-    private javax.swing.JComboBox<String> DAY5;
     private javax.swing.JButton DelayFligthButton;
     private javax.swing.JComboBox<String> DepartureLoc_RegFlight;
-    private javax.swing.JComboBox<String> MONTH5;
     private javax.swing.JTable PassengerFlightTable;
     private javax.swing.JPanel PassengerRegistrationPanel;
     private javax.swing.JComboBox<String> Plane_RegFlight;
@@ -1891,8 +1888,11 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JPanel administrationPanel;
     private javax.swing.JRadioButton administrator;
     private javax.swing.JPanel airplanePanel;
+    private javax.swing.JComboBox<String> boxMinuteFlightReg;
     private javax.swing.JComboBox<String> boxPassengerRegDay;
     private javax.swing.JComboBox<String> boxPassengerRegMonth;
+    private javax.swing.JComboBox<String> boxUpdDay;
+    private javax.swing.JComboBox<String> boxUpdMonth;
     private javax.swing.JButton createLocationButton;
     private javax.swing.JPanel delayPanel;
     private javax.swing.JPanel flightRegistrationPanel;

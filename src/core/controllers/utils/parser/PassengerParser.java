@@ -22,24 +22,13 @@ public class PassengerParser {
     ) {
         try {
 
-            System.out.println("idStr: " + idStr);
-            System.out.println("yearStr: " + yearStr);
-            System.out.println("monthStr: " + monthStr);
-            System.out.println("dayStr: " + dayStr);
-            System.out.println("phoneCodeStr: " + phoneCodeStr);
-            System.out.println("phoneStr: " + phoneStr);
-
             long id = Long.parseLong(idStr);
             int year = Integer.parseInt(yearStr.trim());
             int month = Integer.parseInt(monthStr.trim());
             int day = Integer.parseInt(dayStr.trim());
             int phoneCode = Integer.parseInt(phoneCodeStr.trim());
             long phone = Long.parseLong(phoneStr.trim());
-            LocalDate birthDate = LocalDate.of(year, month, day);
-
-            System.out.println("ID: " + idStr);
-            System.out.println("Año: " + yearStr + ", Mes: " + monthStr + ", Día: " + dayStr);
-            System.out.println("PhoneCode: " + phoneCodeStr + ", Phone: " + phoneStr);
+            LocalDate birthDate = LocalDate.of(year, month, day);          
 
             Passenger p = new Passenger(id, firstname, lastname, birthDate, phoneCode, phone, country);
             return new Response<>(Status.OK, "Parseo exitoso", p);
