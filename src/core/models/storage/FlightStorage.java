@@ -37,10 +37,7 @@ public class FlightStorage extends Storage {
         if (!existsById(flight.getId())) {
             flights.add(flight);
             notifyObservers(); 
-        Plane plane = flight.getPlane();
-        if (plane != null) {
-            plane.addFlight(flight);
-        }
+        
         }
     }
 

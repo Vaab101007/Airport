@@ -43,7 +43,6 @@ public class AirportFrame extends javax.swing.JFrame {
     private PlaneController planeController = new PlaneController();
     private LocationController locationController = new LocationController();
     private FlightTableController flightTablecontroller = new FlightTableController();
-    
 
     /**
      * Creates new form AirportFrame
@@ -88,19 +87,18 @@ public class AirportFrame extends javax.swing.JFrame {
         ComboDataFiller.loadFlights(txtFlights_addPassengerToFlight);
         ComboDataFiller.loadFlights(txtFlights_delayFlights);
         ScaleLoc_RegFlight.addItem("None");
-        
-        
+
         FlightStorage.getInstance().addObserver(() -> updateFlightTable());
         PassengerStorage.getInstance().addObserver(() -> updatePassengerTable());
         PlaneStorage.getInstance().addObserver(() -> updatePlaneTable());
         LocationStorage.getInstance().addObserver(() -> updateLocationTable());
 
-       PassengerStorage.getInstance().addObserver(() -> {
-       passengerTableController.viewUserFlight(PassengerFlightTable, userSelect);
-       });
-           
+        PassengerStorage.getInstance().addObserver(() -> {
+            passengerTableController.viewUserFlight(PassengerFlightTable, userSelect);
+        });
+
         userSelect.addActionListener(e -> {
-        passengerTableController.viewUserFlight(PassengerFlightTable, userSelect);
+            passengerTableController.viewUserFlight(PassengerFlightTable, userSelect);
         });
 
     }
@@ -151,37 +149,36 @@ public class AirportFrame extends javax.swing.JFrame {
             jComboBox8.addItem("" + i);
         }
     }
-    
+
     private void updateFlightTable() {
-    Response<List<String[]>> response = flightTablecontroller.refreshTableData();
-    if (response.getStatus() >= 400) {
-        return;
-    }
-    List<String[]> flightData = response.getData();
-    DefaultTableModel model = (DefaultTableModel) showAllFlightsTable.getModel();
-   
-    model.setRowCount(0);
+        Response<List<String[]>> response = flightTablecontroller.refreshTableData();
+        if (response.getStatus() >= 400) {
+            return;
+        }
+        List<String[]> flightData = response.getData();
+        DefaultTableModel model = (DefaultTableModel) showAllFlightsTable.getModel();
 
-    for (String[] row : flightData) {
-        model.addRow(row);
-    }
-}
+        model.setRowCount(0);
 
+        for (String[] row : flightData) {
+            model.addRow(row);
+        }
+    }
 
     private void updatePassengerTable() {
-    DefaultTableModel model = (DefaultTableModel) passengersTable.getModel();
-    PassengerTableController.updatePassengerTable(model);
-}
+        DefaultTableModel model = (DefaultTableModel) passengersTable.getModel();
+        PassengerTableController.updatePassengerTable(model);
+    }
 
     private void updatePlaneTable() {
-    DefaultTableModel model = (DefaultTableModel) planesTable.getModel();
-    PlaneTableController.updatePlaneTable(model);
-}
+        DefaultTableModel model = (DefaultTableModel) planesTable.getModel();
+        PlaneTableController.updatePlaneTable(model);
+    }
 
     private void updateLocationTable() {
-    DefaultTableModel model = (DefaultTableModel) locationsTable.getModel(); 
-    LocationTableController.updateLocationTable(model);
-}
+        DefaultTableModel model = (DefaultTableModel) locationsTable.getModel();
+        LocationTableController.updateLocationTable(model);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1497,8 +1494,8 @@ public class AirportFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    
+
+
     private void panelRound2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelRound2MousePressed
         x = evt.getX();
         y = evt.getY();
@@ -1652,13 +1649,8 @@ public class AirportFrame extends javax.swing.JFrame {
         String hoursScaleStr = txtHourScaleDuration_RegFlight.getSelectedItem().toString().trim();
         String minutesScaleStr = txtMinsScaleDuration_RegFlight.getSelectedItem().toString().trim();
 
-        Plane plane = null;
-        for (Plane p : this.planes) {
-            if (planeId.equals(p.getId())) {
-                plane = p;
-                break;
-            }
-        }
+        PlaneStorage planeStorage = PlaneStorage.getInstance();
+        Plane plane = planeStorage.findById(planeId);
 
         Location departure = null, arrival = null, scale = null;
 
@@ -1685,6 +1677,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 return;
             }
         }
+
         Response<Flight> response = flightController.createFlight(
                 id, plane, departure, scale, arrival,
                 departureDateStr,
@@ -1698,8 +1691,10 @@ public class AirportFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, response.getMessage(), "Advertencia " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
             Flight newFlight = response.getData();
-            plane.addFlight(newFlight);
-            updatePlaneTable();
+
+            if (plane != null && newFlight != null) {
+                plane.addFlight(newFlight);
+            }
 
             DefaultTableModel model = (DefaultTableModel) planesTable.getModel();
             PlaneTableController.updatePlaneTable(model);
@@ -1708,6 +1703,7 @@ public class AirportFrame extends javax.swing.JFrame {
             txtFlights_addPassengerToFlight.addItem(id);
             txtFlights_delayFlights.addItem(id);
         }
+
     }//GEN-LAST:event_CreateFlightButtonActionPerformed
 
     private void updatePassengerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatePassengerButtonActionPerformed
@@ -1735,7 +1731,7 @@ public class AirportFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, parsed.getMessage(), "Error " + parsed.getStatus(), JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         Passenger passenger = parsed.getData();
         Response response = passengerController.updatePassenger(passenger);
 
@@ -1762,7 +1758,7 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void addFlightsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFlightsButtonActionPerformed
         String idText = UserID_AddToFlight.getText().trim();
-        
+
         if (idText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor ingresa el ID del pasajero.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
             return;
@@ -1779,7 +1775,7 @@ public class AirportFrame extends javax.swing.JFrame {
 
         if (success) {
             JOptionPane.showMessageDialog(this, "Pasajero añadido al vuelo", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            updateFlightTable(); 
+            updateFlightTable();
         } else {
             JOptionPane.showMessageDialog(this, "Error al añadir pasajero al vuelo. Verifica que el pasajero y vuelo existan.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -1799,7 +1795,7 @@ public class AirportFrame extends javax.swing.JFrame {
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(this, response.getMessage(), "Advertencia " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            updateFlightTable(); 
+            updateFlightTable();
             JOptionPane.showMessageDialog(this, response.getMessage(), "Éxito " + response.getStatus(), JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_DelayFligthButtonActionPerformed
@@ -1823,7 +1819,7 @@ public class AirportFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, response.getMessage(), "Advertencia " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
             List<String[]> flightData = response.getData();
-            DefaultTableModel model = (DefaultTableModel) showAllFlightsTable.getModel(); 
+            DefaultTableModel model = (DefaultTableModel) showAllFlightsTable.getModel();
             model.setRowCount(0);
 
             for (String[] row : flightData) {
@@ -1841,7 +1837,7 @@ public class AirportFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshPlanesTableActionPerformed
 
     private void refreshLocationTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshLocationTableActionPerformed
-  
+
         DefaultTableModel model = (DefaultTableModel) locationsTable.getModel();
         Response response = LocationTableController.updateLocationTable(model);
     }//GEN-LAST:event_refreshLocationTableActionPerformed
